@@ -1,0 +1,119 @@
+### Create a new order
+POST http://localhost:8083/orders
+Content-Type: application/json
+Accept: application/json
+
+{
+  "customer": {
+    "id": "67d35686cd1d3c4402ac6d13"
+  },
+  "paymentMethod": {
+    "id": "a0e237c2-8404-4eb6-b27b-f6e7968cae15"
+  },
+  "status": "RECEIVED",
+  "items": [
+    {
+      "product": {
+        "id": "6d38e8f5-5173-43fa-aef7-60f6e890c13d"
+      },
+      "quantity": 10,
+      "unitPrice": 200,
+      "discount": 0
+    },
+    {
+      "product": {
+        "id": "7d95668d-5d35-4dac-a009-dc1282491952"
+      },
+      "quantity": 1,
+      "unitPrice": 1800,
+      "discount": 0
+    },
+    {
+      "product": {
+        "id": "20e0311b-9f0b-45a9-aa44-3d10f1edc824"
+      },
+      "quantity": 1,
+      "unitPrice": 1000,
+      "discount": 0
+    }
+  ]
+}
+
+### Get a list of all orders
+GET http://localhost:8083/orders
+Content-Type: application/json
+Accept: application/json
+
+### Get a order by id
+GET http://localhost:8083/orders/f8e55c11-b216-4f7d-b91d-96bfc5ade707
+Content-Type: application/json
+Accept: application/json
+
+### Get a order by customer
+GET http://localhost:8083/orders/by-customer/67d354e09c577d16ffd556e0
+Content-Type: application/json
+Accept: application/json
+
+### Update a order
+PUT http://localhost:8083/orders/f8e55c11-b216-4f7d-b91d-96bfc5ade707
+Content-Type: application/json
+Accept: application/json
+
+{
+  "customer": {
+    "id": "67d354e09c577d16ffd556e0"
+  },
+  "paymentMethod": {
+    "id": "b3e582fc-5463-4297-a046-83caec835af3"
+  },
+  "status": "CONFIRMED",
+  "items": [
+    {
+      "product": {
+        "id": "6d38e8f5-5173-43fa-aef7-60f6e890c13d"
+      },
+      "quantity": 5,
+      "unitPrice": 250,
+      "discount": 0.2
+    },
+    {
+      "product": {
+        "id": "e1c92227-d3db-4349-b9c8-ed2c8ed9021c"
+      },
+      "quantity": 3,
+      "unitPrice": 350,
+      "discount": 0
+    },
+    {
+      "product": {
+        "id": "2e93e208-26f0-46bd-a78d-1595a9c1a3b4"
+      },
+      "quantity": 1,
+      "unitPrice": 2000,
+      "discount": 0
+    },
+    {
+      "product": {
+        "id": "7d95668d-5d35-4dac-a009-dc1282491952"
+      },
+      "quantity": 1,
+      "unitPrice": 1800,
+      "discount": 0
+    },
+    {
+      "product": {
+        "id": "6041a1b0-4f11-41e5-8a35-aba4f8bb460c"
+      },
+      "quantity": 1,
+      "unitPrice": 1500,
+      "discount": 0
+    }
+  ]
+}
+
+### Delete a order
+DELETE http://localhost:8083/orders/4fc9088d-d341-49d8-9d8a-bbafbcefe939
+Content-Type: application/json
+Accept: application/json
+
+###

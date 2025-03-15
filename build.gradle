@@ -1,0 +1,8 @@
+plugins {
+    id 'base'
+}
+
+allprojects {
+    group = 'org.addy'
+    version = '1.0.0'
+}

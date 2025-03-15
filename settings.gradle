@@ -1,0 +1,8 @@
+rootProject.name = 'hello-microservice'
+
+include 'config-server'
+include 'discovery-server'
+include 'product-service'
+include 'customer-service'
+include 'order-service'
+include 'notification-service'

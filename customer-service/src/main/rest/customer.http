@@ -1,0 +1,75 @@
+### Create a new customer
+POST http://localhost:8082/customers
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Jane Doe",
+  "email": "jane.doe@dummy.xyz",
+  "password": "12349876",
+  "phoneNumber": "(123) 456-7890",
+  "address": "9876 Funny Street",
+  "city": "Ottawa",
+  "state": "ON",
+  "postalCode": "B9C 8D7",
+  "paymentMethods": [
+    {
+      "type": "PAYPAL",
+      "number": "jane.doe@dummy.xyz"
+    }
+  ]
+}
+
+### Get a list of all customers
+GET http://localhost:8082/customers
+Content-Type: application/json
+Accept: application/json
+
+### Get a customer by id
+GET http://localhost:8082/customers/67d3561fcd1d3c4402ac6d12
+Content-Type: application/json
+Accept: application/json
+
+### Get a customer by name
+GET http://localhost:8082/customers/by-name/Jane%20Doe
+Content-Type: application/json
+Accept: application/json
+
+### Get a customer by name
+GET http://localhost:8082/customers/by-email/jane.doe@dummy.xyz
+Content-Type: application/json
+Accept: application/json
+
+### Get a customer by name
+GET http://localhost:8082/customers/by-phone-number/(789)%20456-1230
+Content-Type: application/json
+Accept: application/json
+
+### Update a customer
+PUT http://localhost:8082/customers/67d35686cd1d3c4402ac6d13
+Content-Type: application/json
+Accept: application/json
+
+{
+    "name": "Jane Doe",
+    "email": "jane.doe@dummy.xyz",
+    "password": "12349876",
+    "phoneNumber": "(123) 456-7890",
+    "address": "9876 Funny Street",
+    "city": "Ottawa",
+    "state": "ON",
+    "postalCode": "B9C 8D7",
+    "paymentMethods": [
+      {
+        "type": "PAYPAL",
+        "number": "jane.doe@dummy.xyz"
+      }
+    ]
+  }
+
+### Delete a customer
+DELETE http://localhost:8082/customers/67d3561fcd1d3c4402ac6d12
+Content-Type: application/json
+Accept: application/json
+
+###
