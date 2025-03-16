@@ -5,7 +5,7 @@
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
-    <title>New Assignment</title>
+    <title>Order received</title>
     <style type="text/css">
         /* reset */
         article,
@@ -620,13 +620,14 @@
                                                         <tr>
                                                             <td align="center" class="textContent" valign="top">
                                                                 <h1 style="color:#FFFFFF;line-height:100%;font-family:Helvetica,Arial,sans-serif;font-size:35px;font-weight:normal;margin-bottom:5px;text-align:center;"
-                                                                    th:text="${organizationName} + ' Assignment Completed'">
-                                                                    {{organizationName}} Assignment Completed</h1>
-                                                                <h2 style="text-align:center;font-weight:normal;font-family:Helvetica,Arial,sans-serif;font-size:23px;margin-bottom:10px;color:#C9BC20;line-height:135%;"
-                                                                    th:text="${projectName}">{{projectName}}</h2>
+                                                                th:text="'Thank you for your order, ' + ${customer.name}">
+                                                                    Thank you for your order, {{customer.name}}</h1>
                                                                 <div style="text-align:center;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;color:#FFFFFF;line-height:135%;"
-                                                                     th:text="${taskType} + ' has been completed.'">
-                                                                    {{taskType}} has been completed.
+                                                                     th:text="'The delivery is scheduled for ' + ${deliveryDate} + '.'">
+                                                                    The delivery is scheduled for {{deliveryDate}}.
+                                                                </div>
+                                                                <div style="text-align:center;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;color:#FFFFFF;line-height:135%;">
+                                                                    Follow your order on our website.
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -658,13 +659,17 @@
                                                                     <tr>
                                                                         <td class="textContent" valign="top">
                                                                             <h3 style="color:#5F5F5F;line-height:125%;font-family:Helvetica,Arial,sans-serif;font-size:20px;font-weight:normal;margin-top:0;margin-bottom:3px;text-align:left;"
-                                                                                th:text="${assignmentName}">
-                                                                                {{assignmentName}}</h3>
-                                                                            <div style="text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:3px;color:#5F5F5F;line-height:135%;"
-                                                                                 th:text="'The ' + ${taskType} + ' has been completed by ' + ${completedUser}">
-                                                                                The {{taskType}} has been completed by
-                                                                                {{completedUser}}
-                                                                            </div>
+                                                                                th:text="'Payed with ' + ${paymentMethod.type} + ' ending with ' + ${paymentMethod.number}">
+                                                                                Payed with {{paymentMethod.type}} ending with {{paymentMethod.number}}</h3>
+                                                                            <p><b th:text="'Total: ' + ${totalPrice}">Total: {{totalPrice}}</b></p>
+                                                                            <div><b>Your receipt:</b></div>
+                                                                            <div th:text="${customer.address} + ', ' + ${customer.city} + ', ' + ${customer.state} + ' ' + ${customer.postalCode}">
+                                                                                {{customer.address}}, {{customer.city}}, {{customer.state}} {{customer.postalCode}}</div>
+                                                                            <br>
+                                                                            <ul style="list-style-type: none !important;margin: 0 !important;padding: 0 !important;">
+                                                                                <li th:each="item : ${items}" th:text="${item.quantity} + ' x ' + ${item.productName} + ' ' + ${item.price} + '$'">
+                                                                                    {{item.quantity}} x {{item.productName}} {{item.price}}$</li>
+                                                                            </ul>
                                                                         </td>
                                                                     </tr>
                                                                 </table>
@@ -701,9 +706,9 @@
                                                                         <td align="center" class="buttonContent"
                                                                             style="padding-top:15px;padding-bottom:15px;padding-right:15px;padding-left:15px;"
                                                                             valign="middle">
-                                                                            <a href="{{link}}"
-                                                                               style="color:#FFFFFF;text-decoration:none;font-family:Helvetica,Arial,sans-serif;font-size:20px;line-height:135%;" target="_blank"
-                                                                               th:href="${link}" th:text="${linkText}">{{linkText}}</a>
+                                                                            <a href="http://google.com"
+                                                                               style="color:#FFFFFF;text-decoration:none;font-family:Helvetica,Arial,sans-serif;font-size:20px;line-height:135%;"
+                                                                               target="_blank">Follow your order</a>
                                                                         </td>
                                                                     </tr>
                                                                 </table>
@@ -739,7 +744,7 @@
                                                             <td bgcolor="#E1E1E1" valign="top">
 
                                                                 <div style="font-family:Helvetica,Arial,sans-serif;font-size:13px;color:#828282;text-align:center;line-height:120%;">
-                                                                    <div>Copyright &#169; 2022. All rights reserved.
+                                                                    <div>Copyright &#169; 2025. All rights reserved.
                                                                     </div>
                                                                     <div>If you don't want to receive these emails from
                                                                         us in the future, please <a

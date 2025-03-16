@@ -1,5 +1,6 @@
 package org.addy.orderservice.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -22,6 +23,7 @@ public class OrderItemDto {
 
     @NotNull
     @PositiveOrZero
+    @JsonProperty("unit_price")
     private BigDecimal unitPrice;
 
     @Positive
@@ -29,4 +31,9 @@ public class OrderItemDto {
 
     @PositiveOrZero
     private float discount;
+
+    @JsonProperty("total_price")
+    public BigDecimal getTotalPrice() {
+        return unitPrice.multiply(BigDecimal.valueOf(quantity * (1f - discount)));
+    }
 }

@@ -16,6 +16,7 @@ public interface OrderMapper {
     OrderDto map(Order order);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdOn", ignore = true)
     @Mapping(target = "items", ignore = true)
     @Mapping(target = "customerId", source = "customer.id")
     @Mapping(target = "paymentMethodId", source = "paymentMethod.id")

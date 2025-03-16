@@ -1,0 +1,42 @@
+### Create a new product image
+POST http://localhost:8080/product-images
+Content-Type: application/json
+Accept: application/json
+
+{
+  "url": "https://th.bing.com/th/id/OIP.a9xBdZmVWXF2Ov_B8WbB5gHaGR?rs=1&pid=ImgDetMain",
+  "is_default": true,
+  "product": {
+    "id": "6d38e8f5-5173-43fa-aef7-60f6e890c13d"
+  }
+}
+
+### Get a list of all product images
+GET http://localhost:8080/product-images
+Content-Type: application/json
+Accept: application/json
+
+### Get a product image by id
+GET http://localhost:8080/product-images/56930201-e157-43ae-a5b0-05a1fab3461f
+Content-Type: application/json
+Accept: application/json
+
+### Update a product image
+PUT http://localhost:8080/product-images/fc6c81c8-890f-4be9-8fe4-026b17bdedef
+Content-Type: application/json
+Accept: application/json
+
+{
+  "url": "https://i.ytimg.com/vi/lzC2a6YN77U/maxresdefault.jpg",
+  "product": {
+    "id": "2e93e208-26f0-46bd-a78d-1595a9c1a3b4"
+  },
+  "is_default": true
+}
+
+### Delete a product image
+DELETE http://localhost:8080/product-images/56930201-e157-43ae-a5b0-05a1fab3461f
+Content-Type: application/json
+Accept: application/json
+
+###

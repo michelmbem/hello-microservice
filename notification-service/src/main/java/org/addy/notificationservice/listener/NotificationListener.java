@@ -2,7 +2,7 @@ package org.addy.notificationservice.listener;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.addy.notificationservice.model.Notification;
+import org.addy.messaging.Notification;
 import org.addy.notificationservice.service.NotificationService;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;

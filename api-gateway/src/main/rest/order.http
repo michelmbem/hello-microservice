@@ -1,5 +1,5 @@
 ### Create a new order
-POST http://localhost:8083/orders
+POST http://localhost:8080/orders
 Content-Type: application/json
 Accept: application/json
 
@@ -49,22 +49,22 @@ Accept: application/json
 }
 
 ### Get a list of all orders
-GET http://localhost:8083/orders
+GET http://localhost:8080/orders
 Content-Type: application/json
 Accept: application/json
 
 ### Get a order by id
-GET http://localhost:8083/orders/f8e55c11-b216-4f7d-b91d-96bfc5ade707
+GET http://localhost:8080/orders/f8e55c11-b216-4f7d-b91d-96bfc5ade707
 Content-Type: application/json
 Accept: application/json
 
 ### Get a order by customer
-GET http://localhost:8083/orders/by-customer/67d354e09c577d16ffd556e0
+GET http://localhost:8080/orders/by-customer/67d354e09c577d16ffd556e0
 Content-Type: application/json
 Accept: application/json
 
 ### Update a order
-PUT http://localhost:8083/orders/9eabef63-e165-42c4-8c30-42c4e6760db2
+PUT http://localhost:8080/orders/9eabef63-e165-42c4-8c30-42c4e6760db2
 Content-Type: application/json
 Accept: application/json
 
@@ -114,7 +114,7 @@ Accept: application/json
 }
 
 ### Delete a order
-DELETE http://localhost:8083/orders/a13e3be7-3c7e-4861-8bcb-112f2eb569b7
+DELETE http://localhost:8080/orders/a13e3be7-3c7e-4861-8bcb-112f2eb569b7
 Content-Type: application/json
 Accept: application/json
 

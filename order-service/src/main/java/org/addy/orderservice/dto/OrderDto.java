@@ -1,11 +1,13 @@
 package org.addy.orderservice.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.addy.orderservice.enumeration.OrderStatus;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +25,13 @@ public class OrderDto {
     private LocalDateTime createdOn;
 
     @NotNull
+    @JsonProperty("delivery_date")
+    private LocalDateTime deliveryDate;
+
+    @NotNull
     private CustomerDto customer;
 
+    @JsonProperty("payment_method")
     private PaymentMethodDto paymentMethod;
 
     @NotNull
@@ -34,4 +41,15 @@ public class OrderDto {
     @Valid
     @NotEmpty
     List<OrderItemDto> items = new ArrayList<>();
+
+    @JsonProperty("total_price")
+    public BigDecimal getTotalPrice() {
+        BigDecimal totalPrice = BigDecimal.ZERO;
+
+        for (OrderItemDto item : items) {
+            totalPrice = totalPrice.add(item.getTotalPrice());
+        }
+
+        return totalPrice;
+    }
 }

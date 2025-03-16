@@ -36,19 +36,18 @@ public class OrderService {
 
     public OrderDto persist(OrderDto orderDto) {
         Order order = orderMapper.map(orderDto);
-        order = orderRepository.save(order);
+        order = orderRepository.saveAndFlush(order);
 
         return orderMapper.map(order);
     }
 
-    public void update(UUID id, OrderDto orderDto) {
-        orderRepository.findById(id).ifPresentOrElse(order -> {
+    public OrderDto update(UUID id, OrderDto orderDto) {
+        return orderRepository.findById(id)
+                .map(order -> {
                     orderMapper.map(orderDto, order);
-                    orderRepository.save(order);
-                },
-                () -> {
-                    throw new NoSuchElementException("Order with id '" + id + "' not found");
-                });
+                    return orderMapper.map(orderRepository.saveAndFlush(order));
+                })
+                .orElseThrow(() -> new NoSuchElementException("Order with id '" + id + "' not found"));
     }
 
     public void delete(UUID id) {

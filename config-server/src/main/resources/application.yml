@@ -1,8 +1,11 @@
 spring:
   application:
     name: config-server
-  profiles:
-    active: native
+  cloud:
+    config:
+      server:
+        git:
+          uri: file://${user.home}/Projets/Java/hello-microservice-configuration
 
 server:
   port: 8888

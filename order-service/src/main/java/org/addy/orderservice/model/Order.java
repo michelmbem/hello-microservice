@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.addy.orderservice.enumeration.OrderStatus;
+import org.hibernate.annotations.CurrentTimestamp;
 import org.hibernate.annotations.JdbcType;
 import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
@@ -25,15 +26,18 @@ public class Order {
     @Id
     private UUID id;
 
+    @CurrentTimestamp
     @Column(name = "created_on", insertable = false, updatable = false)
     private LocalDateTime createdOn;
+
+    @Column(name = "delivery_date", nullable = false)
+    private LocalDateTime deliveryDate;
 
     @Column(name = "customer_id", nullable = false)
     private String customerId;
 
     @Column(name = "payment_method_id")
     private UUID paymentMethodId;
-
 
     @NotNull
     @Enumerated(EnumType.STRING)

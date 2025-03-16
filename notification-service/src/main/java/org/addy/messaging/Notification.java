@@ -1,4 +1,4 @@
-package org.addy.notificationservice.model;
+package org.addy.messaging;
 
 import java.util.Map;
 

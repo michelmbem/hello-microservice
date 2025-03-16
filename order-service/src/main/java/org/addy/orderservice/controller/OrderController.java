@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.addy.orderservice.dto.OrderDto;
+import org.addy.orderservice.service.NotificationService;
 import org.addy.orderservice.service.OrderService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,7 @@ import java.util.UUID;
 @RequestMapping("/orders")
 public class OrderController {
     private final OrderService orderService;
+    private final NotificationService notificationService;
 
     @GetMapping
     public List<OrderDto> findAll() {
@@ -38,6 +40,7 @@ public class OrderController {
     @PostMapping
     public ResponseEntity<OrderDto> persist(@Valid @RequestBody OrderDto orderDto) {
         orderDto = orderService.persist(orderDto);
+        notificationService.orderReceived(orderDto);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -49,7 +52,8 @@ public class OrderController {
 
     @PutMapping("{id}")
     public ResponseEntity<Void> update(@PathVariable UUID id, @Valid @RequestBody OrderDto orderDto) {
-        orderService.update(id, orderDto);
+        orderDto = orderService.update(id, orderDto);
+        notificationService.orderUpdated(orderDto);
 
         return ResponseEntity.noContent().build();
     }

@@ -1,5 +1,6 @@
 package org.addy.orderservice.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -23,8 +24,7 @@ public class CustomerDto {
     @Email
     private String email;
 
-    private String password;
-
+    @JsonProperty("phone_number")
     private String phoneNumber;
 
     private String address;
@@ -33,8 +33,10 @@ public class CustomerDto {
 
     private String state;
 
+    @JsonProperty("postal_code")
     private String postalCode;
 
     @Valid
+    @JsonProperty("payment_methods")
     private List<PaymentMethodDto> paymentMethods;
 }

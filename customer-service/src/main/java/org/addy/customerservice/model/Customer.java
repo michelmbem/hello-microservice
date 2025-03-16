@@ -1,5 +1,7 @@
 package org.addy.customerservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -31,9 +33,11 @@ public class Customer {
     @Indexed(unique = true)
     private String email;
 
+    @JsonIgnore
     private String password;
 
     @Field("phone_number")
+    @JsonProperty("phone_number")
     private String phoneNumber;
 
     private String address;
@@ -43,9 +47,11 @@ public class Customer {
     private String state;
 
     @Field("postal_code")
+    @JsonProperty("postal_code")
     private String postalCode;
 
     @Valid
     @Field("payment_methods")
+    @JsonProperty("payment_methods")
     private List<PaymentMethod> paymentMethods;
 }

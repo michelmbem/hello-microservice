@@ -1,0 +1,62 @@
+### Create a new product
+POST http://localhost:8080/products
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Bouillon de queue de boeuf",
+  "unit_price": 1700,
+  "categories": [
+    {
+      "id": "35b33fef-4597-4a8a-b42e-ee92de88cbe7"
+    }
+  ]
+}
+
+### Get a list of all products
+GET http://localhost:8080/products
+Content-Type: application/json
+Accept: application/json
+
+### Get a product by id
+GET http://localhost:8080/products/6d38e8f5-5173-43fa-aef7-60f6e890c13d
+Content-Type: application/json
+Accept: application/json
+
+### Get a product by name
+GET http://localhost:8080/products/by-name/Mague%20du%20Cameroun
+Content-Type: application/json
+Accept: application/json
+
+### Get all images of a product
+GET http://localhost:8080/products/2e93e208-26f0-46bd-a78d-1595a9c1a3b4/images
+Content-Type: application/json
+Accept: application/json
+
+### Get the default image of a product
+GET http://localhost:8080/products/7d95668d-5d35-4dac-a009-dc1282491952/images/default
+Content-Type: application/json
+Accept: application/json
+
+### Update a product
+PUT http://localhost:8080/products/6d38e8f5-5173-43fa-aef7-60f6e890c13d
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Mangue camerounaise",
+  "unit_price": 200,
+  "dicounted_price": 100,
+  "categories": [
+    {
+      "id": "108de03b-f129-445d-8964-3cf2b76de125"
+    }
+  ]
+}
+
+### Delete a product
+DELETE http://localhost:8080/products/ed63d542-452d-4f39-9a18-be1336412927
+Content-Type: application/json
+Accept: application/json
+
+###
