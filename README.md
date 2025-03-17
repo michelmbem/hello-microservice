@@ -31,9 +31,9 @@ _docker-compose.yml_ files and launch scripts are provided for each server in th
 
 ## Configuration
 
-The configuration files are stored in a local git repository: _hello-microservice-configuration_.<br>
+The configuration files are stored in a local git repository: [hello-microservice-configuration](https://github.com/michelmbem/hello-microservice-configuration).<br>
 The _config-server_ module should be running before building any other module.<br>
-The order or build is as follows:
+The order of build is as follows:
 
 1. config-server (launch it before moving forward)
 2. discovery-server
