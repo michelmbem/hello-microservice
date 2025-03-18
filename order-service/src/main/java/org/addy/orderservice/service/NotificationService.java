@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.Map;
 
 @Slf4j
@@ -22,27 +23,23 @@ public class NotificationService {
     private String mailSender;
 
     public void orderReceived(OrderDto orderDto) {
-        var notification = new Notification(
+        notificationSender.send(new Notification(
                 mailSender,
                 orderDto.getCustomer().getEmail(),
                 "Order received",
                 "order-received",
                 getSubstitutions(orderDto)
-        );
-
-        notificationSender.send(notification);
+        ));
     }
 
     public void orderUpdated(OrderDto orderDto) {
-        var notification = new Notification(
+        notificationSender.send(new Notification(
                 mailSender,
                 orderDto.getCustomer().getEmail(),
                 "Order updated",
                 "order-updated",
                 getSubstitutions(orderDto)
-        );
-
-        notificationSender.send(notification);
+        ));
     }
 
     private Map<String, Object> getSubstitutions(OrderDto orderDto) {
@@ -58,8 +55,7 @@ public class NotificationService {
                         "postalCode", orderDto.getCustomer().getPostalCode()),
                 "paymentMethod", Map.of(
                         "type", orderDto.getPaymentMethod().getType().getEnglishName(),
-                        "number", orderDto.getPaymentMethod().getType().endOfNumber(
-                                orderDto.getPaymentMethod().getNumber())),
+                        "number", orderDto.getPaymentMethod().getNumberEnd()),
                 "items", orderDto.getItems().stream().map(item -> Map.of(
                         "productName", item.getProduct().getName(),
                         "quantity", item.getQuantity(),
@@ -70,7 +66,7 @@ public class NotificationService {
 
     private static String date2str(LocalDateTime dateTime) {
         return dateTime != null
-                ? dateTime.format(DateTimeFormatter.ofPattern("d MMM yyyy 'at' HH:mm"))
+                ? dateTime.format(DateTimeFormatter.ofPattern("MMM d, yyyy 'at' HH:mm").localizedBy(Locale.ENGLISH))
                 : "";
     }
 }

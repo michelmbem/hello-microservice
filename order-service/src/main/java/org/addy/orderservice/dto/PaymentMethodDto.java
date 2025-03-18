@@ -1,10 +1,13 @@
 package org.addy.orderservice.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.addy.orderservice.enumeration.PaymentMethodType;
 
 import java.util.UUID;
+
+import static org.apache.commons.lang.StringUtils.right;
 
 @Data
 @NoArgsConstructor
@@ -21,4 +24,12 @@ public class PaymentMethodDto {
 
     @NotNull
     private String number;
+
+    @JsonIgnore
+    public String getNumberEnd() {
+        return switch (type) {
+            case PAYPAL -> right(number, number.indexOf('@'));
+            default -> right(number, 4);
+        };
+    }
 }
