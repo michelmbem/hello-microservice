@@ -31,7 +31,9 @@ Those are:
 **Notes**:
 
 1. _docker-compose.yml_ files and launch scripts are provided for each server in the _containers_ subdirectory.
-2. You should manually recreate the _hello-microservice_ Keycloak realm that is used in this project. Its structure is schematized in the diagram bellow:
+2. You should manually recreate the _hello-microservice_ Keycloak realm that is used in this project. Its structure is schematized in the diagram bellow.
+3. You should also regenerate secret keys for the _customer-service_ and _product-service_ clients and paste them in the _order-service.yml_
+configuration file in place of the defaults (that's in the _hello-microservice-configuration_ git repository).
 
 ![](github-assets/keycloak-realm.png)
 
