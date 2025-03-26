@@ -26,8 +26,14 @@ Those are:
 * **Apache Kafka** with **Kafka UI**: A message broker with a web based administration tool.
 * **Zipkin**: A web requests tracing system.
 * **Maildev**: A mail faker, it doesn't send mails but rather store them for local consultation.
+* **Keycloak**: An open-source identity and access management solution that effortlessly adds authentication to the microservices.
 
-_docker-compose.yml_ files and launch scripts are provided for each server in the _containers_ subdirectory.
+**Notes**:
+
+1. _docker-compose.yml_ files and launch scripts are provided for each server in the _containers_ subdirectory.
+2. You should manually recreate the _hello-microservice_ Keycloak realm that is used in this project. Its structure is schematized in the diagram bellow:
+
+![](github-assets/keycloak-realm.png)
 
 ## Configuration
 

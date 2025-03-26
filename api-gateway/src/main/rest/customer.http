@@ -2,6 +2,7 @@
 POST http://localhost:8080/customers
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{client_access_token}}
 
 {
   "name": "Ethan Smith",
@@ -24,31 +25,37 @@ Accept: application/json
 GET http://localhost:8080/customers
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{client_access_token}}
 
 ### Get a customer by id
 GET http://localhost:8080/customers/67d3561fcd1d3c4402ac6d12
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{client_access_token}}
 
 ### Get a customer by name
 GET http://localhost:8080/customers/by-name/Jane%20Doe
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{client_access_token}}
 
 ### Get a customer by name
 GET http://localhost:8080/customers/by-email/jane.doe@dummy.xyz
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{client_access_token}}
 
 ### Get a customer by name
 GET http://localhost:8080/customers/by-phone-number/(789)%20456-1230
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{client_access_token}}
 
 ### Update a customer
 PUT http://localhost:8080/customers/67d66b4efa38ba6ba572dac6
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{client_access_token}}
 
 {
   "name": "Ethan Smith",
@@ -75,5 +82,6 @@ Accept: application/json
 DELETE http://localhost:8080/customers/67d3561fcd1d3c4402ac6d12
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{client_access_token}}
 
 ###

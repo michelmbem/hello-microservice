@@ -2,6 +2,7 @@
 POST http://localhost:8084/product-images
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{access_token}}
 
 {
   "url": "https://th.bing.com/th/id/OIP.a9xBdZmVWXF2Ov_B8WbB5gHaGR?rs=1&pid=ImgDetMain",
@@ -15,16 +16,19 @@ Accept: application/json
 GET http://localhost:8084/product-images
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{access_token}}
 
 ### Get a product image by id
 GET http://localhost:8084/product-images/56930201-e157-43ae-a5b0-05a1fab3461f
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{access_token}}
 
 ### Update a product image
 PUT http://localhost:8084/product-images/fc6c81c8-890f-4be9-8fe4-026b17bdedef
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{access_token}}
 
 {
   "url": "https://i.ytimg.com/vi/lzC2a6YN77U/maxresdefault.jpg",
@@ -38,5 +42,6 @@ Accept: application/json
 DELETE http://localhost:8084/product-images/56930201-e157-43ae-a5b0-05a1fab3461f
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{access_token}}
 
 ###

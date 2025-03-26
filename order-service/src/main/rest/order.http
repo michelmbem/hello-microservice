@@ -2,9 +2,10 @@
 POST http://localhost:8083/orders
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{access_token}}
 
 {
-  "delivery_date": "2025-03-17T12:00",
+  "delivery_date": "2025-03-24T18:30",
   "customer": {
     "id": "67d354e09c577d16ffd556e0"
   },
@@ -15,23 +16,7 @@ Accept: application/json
   "items": [
     {
       "product": {
-        "id": "6c0039fa-94bc-4cb3-9426-7f2382806d56"
-      },
-      "quantity": 1,
-      "unit_price": 300,
-      "discount": 0
-    },
-    {
-      "product": {
         "id": "2d87bdf1-781f-42ae-a9a1-38d1b23bbb3f"
-      },
-      "quantity": 1,
-      "unit_price": 1200,
-      "discount": 0
-    },
-    {
-      "product": {
-        "id": "3370d3b1-51c3-4f43-a635-6540770ac737"
       },
       "quantity": 1,
       "unit_price": 1200,
@@ -64,9 +49,10 @@ Content-Type: application/json
 Accept: application/json
 
 ### Update a order
-PUT http://localhost:8083/orders/9eabef63-e165-42c4-8c30-42c4e6760db2
+PUT http://localhost:8083/orders/7b643468-e51c-4898-a79f-a76f40c6e9ec
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{access_token}}
 
 {
   "delivery_date": "2025-03-17T12:00",
@@ -114,8 +100,9 @@ Accept: application/json
 }
 
 ### Delete a order
-DELETE http://localhost:8083/orders/a13e3be7-3c7e-4861-8bcb-112f2eb569b7
+DELETE http://localhost:8083/orders/a647af66-d28d-4543-85b7-c47700f1b2e7
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{access_token}}
 
 ###

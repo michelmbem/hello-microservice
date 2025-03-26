@@ -19,12 +19,12 @@ import java.util.Map;
 public class NotificationService {
     private final NotificationSender notificationSender;
 
-    @Value("${mail.sender}")
-    private String mailSender;
+    @Value("${mail.from}")
+    private String mailFrom;
 
     public void orderReceived(OrderDto orderDto) {
         notificationSender.send(new Notification(
-                mailSender,
+                mailFrom,
                 orderDto.getCustomer().getEmail(),
                 "Order received",
                 "order-received",
@@ -34,7 +34,7 @@ public class NotificationService {
 
     public void orderUpdated(OrderDto orderDto) {
         notificationSender.send(new Notification(
-                mailSender,
+                mailFrom,
                 orderDto.getCustomer().getEmail(),
                 "Order updated",
                 "order-updated",

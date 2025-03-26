@@ -1,5 +1,6 @@
 package org.addy.orderservice.client;
 
+import org.addy.orderservice.configuration.feignclient.CustomerClientConfig;
 import org.addy.orderservice.dto.CustomerDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
@@ -7,7 +8,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@FeignClient(name = "customer-service", path = "/customers")
+@FeignClient(
+        name = "customer-service",
+        path = "/customers",
+        configuration = CustomerClientConfig.class)
 public interface CustomerService {
 
     @GetMapping

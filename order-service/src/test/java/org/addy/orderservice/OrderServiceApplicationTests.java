@@ -8,6 +8,7 @@ class OrderServiceApplicationTests {
 
     @Test
     void contextLoads() {
+        // Just to check if the context if correctly loaded for integration tests
     }
 
 }

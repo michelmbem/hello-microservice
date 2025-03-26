@@ -7,6 +7,7 @@ import org.addy.orderservice.dto.OrderDto;
 import org.addy.orderservice.service.NotificationService;
 import org.addy.orderservice.service.OrderService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -38,6 +39,7 @@ public class OrderController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('customer')")
     public ResponseEntity<OrderDto> persist(@Valid @RequestBody OrderDto orderDto) {
         orderDto = orderService.persist(orderDto);
         notificationService.orderReceived(orderDto);
@@ -51,6 +53,7 @@ public class OrderController {
     }
 
     @PutMapping("{id}")
+    @PreAuthorize("hasRole('order-manager')")
     public ResponseEntity<Void> update(@PathVariable UUID id, @Valid @RequestBody OrderDto orderDto) {
         orderDto = orderService.update(id, orderDto);
         notificationService.orderUpdated(orderDto);
@@ -59,6 +62,7 @@ public class OrderController {
     }
 
     @DeleteMapping("{id}")
+    @PreAuthorize("hasRole('order-manager')")
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
         orderService.delete(id);
 

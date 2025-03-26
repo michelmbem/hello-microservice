@@ -2,6 +2,7 @@
 POST http://localhost:8080/categories
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{client_access_token}}
 
 {
   "name": "Asian Dishes",
@@ -12,26 +13,31 @@ Accept: application/json
 GET http://localhost:8080/categories
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{client_access_token}}
 
 ### Get a category by id
 GET http://localhost:8080/categories/108de03b-f129-445d-8964-3cf2b76de125
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{client_access_token}}
 
 ### Get a category by name
 GET http://localhost:8080/categories/by-name/Fruits
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{client_access_token}}
 
 ### Get all products of a category
 GET http://localhost:8080/categories/35b33fef-4597-4a8a-b42e-ee92de88cbe7/products
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{client_access_token}}
 
 ### Update a category
 PUT http://localhost:8080/categories/108de03b-f129-445d-8964-3cf2b76de125
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{client_access_token}}
 
 {
   "name": "Fruits",
@@ -42,5 +48,6 @@ Accept: application/json
 DELETE http://localhost:8080/categories/ed63d542-452d-4f39-9a18-be1336412927
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{client_access_token}}
 
 ###

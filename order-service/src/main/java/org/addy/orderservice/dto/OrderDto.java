@@ -22,6 +22,7 @@ public class OrderDto {
 
     private UUID id;
 
+    @JsonProperty("created_on")
     private LocalDateTime createdOn;
 
     @NotNull

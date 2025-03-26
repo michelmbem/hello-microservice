@@ -2,6 +2,7 @@
 POST http://localhost:8084/products
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{access_token}}
 
 {
   "name": "Bouillon de queue de boeuf",
@@ -17,31 +18,37 @@ Accept: application/json
 GET http://localhost:8084/products
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{access_token}}
 
 ### Get a product by id
 GET http://localhost:8084/products/6d38e8f5-5173-43fa-aef7-60f6e890c13d
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{access_token}}
 
 ### Get a product by name
-GET http://localhost:8084/products/by-name/Mague%20du%20Cameroun
+GET http://localhost:8084/products/by-name/Mangue%20du%20Cameroun
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{access_token}}
 
 ### Get all images of a product
 GET http://localhost:8084/products/2e93e208-26f0-46bd-a78d-1595a9c1a3b4/images
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{access_token}}
 
 ### Get the default image of a product
 GET http://localhost:8084/products/7d95668d-5d35-4dac-a009-dc1282491952/images/default
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{access_token}}
 
 ### Update a product
 PUT http://localhost:8084/products/6d38e8f5-5173-43fa-aef7-60f6e890c13d
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{access_token}}
 
 {
   "name": "Mangue camerounaise",
@@ -58,5 +65,6 @@ Accept: application/json
 DELETE http://localhost:8084/products/ed63d542-452d-4f39-9a18-be1336412927
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{access_token}}
 
 ###
