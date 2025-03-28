@@ -7,10 +7,10 @@ Authorization: Bearer {{user_access_token}}
 {
   "delivery_date": "2025-03-17T12:00",
   "customer": {
-    "id": "67d354e09c577d16ffd556e0"
+    "id": "67e5f82aef6fdc192f720dc3"
   },
   "payment_method": {
-    "id": "b3e582fc-5463-4297-a046-83caec835af3"
+    "id": "bd8511ac-797b-42f6-9166-3549783a224e"
   },
   "status": "RECEIVED",
   "items": [
@@ -65,7 +65,7 @@ Content-Type: application/json
 Accept: application/json
 
 ### Update a order
-PUT http://localhost:8080/orders/e6d1b773-4c40-4697-9819-e470b84afa16
+PUT http://localhost:8080/orders/d83db2e8-55b2-4d12-bf27-436793e0ed42
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{user_access_token}}
@@ -116,7 +116,7 @@ Authorization: Bearer {{user_access_token}}
 }
 
 ### Delete a order
-DELETE http://localhost:8080/orders/e6d1b773-4c40-4697-9819-e470b84afa16
+DELETE http://localhost:8080/orders/d83db2e8-55b2-4d12-bf27-436793e0ed42
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{user_access_token}}

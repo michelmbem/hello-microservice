@@ -1,0 +1,34 @@
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+
+    <springProperty name="logstashHost" source="logging.logstash.host" />
+    <springProperty name="logstashPort" source="logging.logstash.port" />
+
+    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>${logstashHost}:${logstashPort}</destination>
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp/>
+                <logger/>
+                <thread/>
+                <level/>
+                <message/>
+                <logstashMarkers/>
+                <arguments/>
+                <mdc/>
+                <context/>
+            </providers>
+        </encoder>
+    </appender>
+
+    <logger name="org.addy.customerservice" level="DEBUG" additivity="false">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="LOGSTASH" />
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="LOGSTASH" />
+    </root>
+</configuration>

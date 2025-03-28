@@ -1,0 +1,83 @@
+networks:
+  elk-net:
+    driver: bridge
+
+services:
+  setup:
+    image: elasticsearch:${STACK_VERSION}
+    container_name: setup
+    environment:
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - KIBANA_PASSWORD=${KIBANA_PASSWORD}
+    command:
+      - bash
+      - -c
+      - |
+        echo "Waiting for Elasticsearch availability";
+        until curl -s http://elasticsearch:9200 | grep -q "missing authentication credentials"; do sleep 30; done;
+        echo "Setting kibana password";
+        until curl -s -X POST -u "elastic:${ELASTIC_PASSWORD}" -H "Content-Type: application/json" http://elasticsearch:9200/_security/user/kibana/_password -d "{\"password\":\"${KIBANA_PASSWORD}\"}" | grep -q "^{}"; do sleep 10; done;
+        echo "All done!";
+    networks:
+      - elk-net
+
+  elasticsearch:
+    image: elasticsearch:${STACK_VERSION}
+    container_name: elasticsearch
+    restart: unless-stopped
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - discovery.type=single-node
+      - cluster.name=elasticsearch
+      - bootstrap.memory_lock=true
+      - xpack.security.http.ssl.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+    volumes:
+      - ./volumes/elasticsearch:/usr/share/elasticsearch/data
+    networks:
+      - elk-net
+
+  kibana:
+    image: kibana:${STACK_VERSION}
+    container_name: kibana
+    restart: unless-stopped
+    depends_on:
+      - elasticsearch
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - ELASTICSEARCH_USERNAME=kibana
+      - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
+      - TELEMETRY_ENABLED=false
+    networks:
+      - elk-net
+
+  logstash:
+    image: logstash:${STACK_VERSION}
+    container_name: logstash
+    restart: unless-stopped
+    depends_on:
+      - elasticsearch
+    ports:
+      - "5044:5044"
+    environment:
+      - xpack.monitoring.enabled=false
+      - ELASTIC_USER=elastic
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - ELASTIC_HOSTS=http://elasticsearch:9200
+    volumes:
+      - ./volumes/logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+    command:
+      - /bin/bash
+      - -c
+      - |
+        echo "Waiting for Elasticsearch availability";
+        until curl -s http://elasticsearch:9200 | grep -q "missing authentication credentials"; do sleep 1; done;
+        echo "Starting logstash";
+        /usr/share/logstash/bin/logstash -f /usr/share/logstash/pipeline/logstash.conf
+    networks:
+      - elk-net

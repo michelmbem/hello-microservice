@@ -5,8 +5,8 @@ Accept: application/json
 Authorization: Bearer {{client_access_token}}
 
 {
-  "name": "Bouillon de queue de boeuf",
-  "unit_price": 1700,
+  "name": "Safou",
+  "unit_price": 1000,
   "categories": [
     {
       "id": "35b33fef-4597-4a8a-b42e-ee92de88cbe7"

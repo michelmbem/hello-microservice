@@ -5,18 +5,18 @@ Accept: application/json
 Authorization: Bearer {{client_access_token}}
 
 {
-  "name": "Ethan Smith",
-  "email": "ethan.smith@dummy.xyz",
-  "password": "wxyzabcd",
-  "phone_number": "(567) 432-7890",
-  "address": "1234 Sunny Bd",
-  "city": "Edmonton",
-  "state": "AL",
-  "postal_code": "V6B 3E4",
+  "name": "Yann Mandeng",
+  "email": "yann.mandeng@dummy.xyz",
+  "password": "qwertyuiop",
+  "phone_number": "(528) 936-4147",
+  "address": "410 Avenue JAB",
+  "city": "Ngambè",
+  "state": "CM",
+  "postal_code": "X6S K0L",
   "payment_methods": [
     {
-      "type": "DEBIT_CARD",
-      "number": "5436-9870-5786-2431"
+      "type": "CREDIT_CARD",
+      "number": "9317-4682-7319-0123"
     }
   ]
 }
@@ -28,7 +28,7 @@ Accept: application/json
 Authorization: Bearer {{client_access_token}}
 
 ### Get a customer by id
-GET http://localhost:8080/customers/67d3561fcd1d3c4402ac6d12
+GET http://localhost:8080/customers/67e5f82aef6fdc192f720dc3
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{client_access_token}}
