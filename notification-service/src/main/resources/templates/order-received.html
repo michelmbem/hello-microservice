@@ -661,14 +661,14 @@
                                                                             <h3 style="color:#5F5F5F;line-height:125%;font-family:Helvetica,Arial,sans-serif;font-size:20px;font-weight:normal;margin-top:0;margin-bottom:3px;text-align:left;"
                                                                                 th:text="'Payed with ' + ${paymentMethod.type} + ' ending with ' + ${paymentMethod.number}">
                                                                                 Payed with {{paymentMethod.type}} ending with {{paymentMethod.number}}</h3>
-                                                                            <p><b th:text="'Total: ' + ${totalPrice}">Total: {{totalPrice}}</b></p>
+                                                                            <p><b th:text="'Total: ' + ${#numbers.formatDecimal(totalPrice, 1, 'DEFAULT', 2, 'DEFAULT')} + ' $'">Total: {{totalPrice}} $</b></p>
                                                                             <div><b>Your receipt:</b></div>
                                                                             <div th:text="${customer.address} + ', ' + ${customer.city} + ', ' + ${customer.state} + ' ' + ${customer.postalCode}">
                                                                                 {{customer.address}}, {{customer.city}}, {{customer.state}} {{customer.postalCode}}</div>
                                                                             <br>
                                                                             <ul style="list-style-type: none !important;margin: 0 !important;padding: 0 !important;">
-                                                                                <li th:each="item : ${items}" th:text="${item.quantity} + ' x ' + ${item.productName} + ' ' + ${item.price} + '$'">
-                                                                                    {{item.quantity}} x {{item.productName}} {{item.price}}$</li>
+                                                                                <li th:each="item : ${items}" th:text="${item.quantity} + ' x ' + ${item.productName} + ' ' + ${#numbers.formatDecimal(item.price, 1, 'DEFAULT', 2, 'DEFAULT')} + ' $'">
+                                                                                    {{item.quantity}} x {{item.productName}} {{item.price}} $</li>
                                                                             </ul>
                                                                         </td>
                                                                     </tr>

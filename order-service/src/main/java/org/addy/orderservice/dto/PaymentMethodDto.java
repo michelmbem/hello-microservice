@@ -4,10 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.addy.orderservice.enumeration.PaymentMethodType;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.UUID;
-
-import static org.apache.commons.lang.StringUtils.right;
 
 @Data
 @NoArgsConstructor
@@ -28,8 +27,9 @@ public class PaymentMethodDto {
     @JsonIgnore
     public String getNumberEnd() {
         return switch (type) {
-            case PAYPAL -> right(number, number.indexOf('@'));
-            default -> right(number, 4);
+            case CREDIT_CARD, DEBIT_CARD -> StringUtils.right(number, 4);
+            case PAYPAL -> number.substring(number.indexOf('@'));
+            default -> number;
         };
     }
 }

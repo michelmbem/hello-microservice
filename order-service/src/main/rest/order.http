@@ -12,7 +12,6 @@ Authorization: Bearer {{access_token}}
   "payment_method": {
     "id": "b3e582fc-5463-4297-a046-83caec835af3"
   },
-  "status": "RECEIVED",
   "items": [
     {
       "product": {
@@ -39,7 +38,7 @@ Content-Type: application/json
 Accept: application/json
 
 ### Get a order by id
-GET http://localhost:8083/orders/f8e55c11-b216-4f7d-b91d-96bfc5ade707
+GET http://localhost:8083/orders/0bd95565-813a-4384-a0c4-af97151c55ec
 Content-Type: application/json
 Accept: application/json
 
@@ -49,7 +48,7 @@ Content-Type: application/json
 Accept: application/json
 
 ### Update a order
-PUT http://localhost:8083/orders/7b643468-e51c-4898-a79f-a76f40c6e9ec
+PUT http://localhost:8083/orders/0bd95565-813a-4384-a0c4-af97151c55ec
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}
@@ -62,7 +61,6 @@ Authorization: Bearer {{access_token}}
   "payment_method": {
     "id": "b3e582fc-5463-4297-a046-83caec835af3"
   },
-  "status": "CONFIRMED",
   "items": [
     {
       "product": {
@@ -100,7 +98,7 @@ Authorization: Bearer {{access_token}}
 }
 
 ### Delete a order
-DELETE http://localhost:8083/orders/a647af66-d28d-4543-85b7-c47700f1b2e7
+DELETE http://localhost:8083/orders/0bd95565-813a-4384-a0c4-af97151c55ec
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}

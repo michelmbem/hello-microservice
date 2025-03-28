@@ -1,8 +1,11 @@
 package org.addy.orderservice.mapper.decorator;
 
 import org.addy.orderservice.client.CustomerService;
+import org.addy.orderservice.dto.CustomerDto;
 import org.addy.orderservice.dto.OrderDto;
 import org.addy.orderservice.dto.OrderItemDto;
+import org.addy.orderservice.dto.PaymentMethodDto;
+import org.addy.orderservice.enumeration.PaymentMethodType;
 import org.addy.orderservice.mapper.OrderItemMapper;
 import org.addy.orderservice.mapper.OrderMapper;
 import org.addy.orderservice.model.Order;
@@ -14,6 +17,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
+
+import static org.addy.orderservice.util.Constants.*;
 
 public abstract class OrderMapperDecorator implements OrderMapper {
 
@@ -31,13 +37,17 @@ public abstract class OrderMapperDecorator implements OrderMapper {
     public OrderDto map(Order order) {
         OrderDto orderDto = delegate.map(order);
 
-        customerService.findById(order.getCustomerId())
-                .ifPresent(customerDto  -> {
+        customerService.findById(order.getCustomerId()).ifPresentOrElse(
+                customerDto  -> {
                     orderDto.setCustomer(customerDto);
                     orderDto.setPaymentMethod(customerDto.getPaymentMethods().stream()
                             .filter(pm -> Objects.equals(pm.getId(), order.getPaymentMethodId()))
                             .findFirst()
-                            .orElse(null));
+                            .orElse(unknownPaymentMethod(order.getPaymentMethodId())));
+                },
+                () -> {
+                    orderDto.setCustomer(unknownCustomer(order.getCustomerId()));
+                    orderDto.setPaymentMethod(unknownPaymentMethod(order.getPaymentMethodId()));
                 });
 
         return orderDto;
@@ -57,6 +67,27 @@ public abstract class OrderMapperDecorator implements OrderMapper {
         syncItems(orderDto, order);
     }
 
+    private static CustomerDto unknownCustomer(String customerId) {
+        return CustomerDto.builder()
+                .id(customerId)
+                .name("<unknown customer>")
+                .email(UNKNOWN_ATTRIBUTE_VALUE)
+                .phoneNumber(UNKNOWN_ATTRIBUTE_VALUE)
+                .address(UNKNOWN_ATTRIBUTE_VALUE)
+                .city(UNKNOWN_ATTRIBUTE_VALUE)
+                .state(UNKNOWN_ATTRIBUTE_VALUE)
+                .postalCode(UNKNOWN_ATTRIBUTE_VALUE)
+                .build();
+    }
+
+    private static PaymentMethodDto unknownPaymentMethod(UUID paymentMethodId) {
+        return PaymentMethodDto.builder()
+                .id(paymentMethodId)
+                .type(PaymentMethodType.UNKNOWN)
+                .number(UNKNOWN_ATTRIBUTE_VALUE)
+                .build();
+    }
+
     private void syncItems(OrderDto orderDto, Order order) {
         List<OrderItemDto> givenItems = orderDto.getItems();
         List<OrderItem> originalItems = order.getItems();
@@ -65,7 +96,7 @@ public abstract class OrderMapperDecorator implements OrderMapper {
 
         for (OrderItemDto givenItem : givenItems) {
             OrderItem originalItem = originalItems.stream()
-                    .filter(item -> Objects.equals(givenItem.getId(), item.getId()))
+                    .filter(item -> Objects.equals(item.getId(), givenItem.getId()))
                     .findFirst()
                     .orElse(null);
 

@@ -13,7 +13,7 @@ The project includes the following modules:
 * **Notification Service**: Listens for events sent to a Kafka topic and sends emails in response.
 * **Customer Service**: Manages a repository of customers stored as documents in a MongoDB collection.
 * **Product Service**: Manages products, product categories, and product images stored in a PostgreSQL database.
-* **Order Service**: Manages orders. Interacts with the Customer and Product services. Sends events to a Kafka topic to notify clients of the receipt or update of their orders.
+* **Order Service**: Manages orders. Interacts with the Customer and Product services. Sends events to a Kafka topic to notify customers of the receipt or update of their orders.
 * **API Gateway**: Allows access to all services from a single host.
 
 ## Resources
@@ -25,7 +25,7 @@ These are:
 * **MongoDB** with **Mongo Express**: A document-based, no-SQL database management system (DBMS) with a web-based administration and query interface.
 * **Apache Kafka** with **Kafka UI**: A message broker with a web-based administration interface.
 * **Zipkin**: A web request tracing system.
-* **Maildev**: An email forgery, i.e., a pseudo-SMTP server that doesn't forward the mail it receives from its clients but stores it for local viewing.
+* **Maildev**: A fake SMTP server that doesn't forward the mails it receives from its clients but stores them for local viewing.
 * **Keycloak**: An open-source identity and access management solution that allows for adding authentication and authorization support to microservices with little difficulty.
 * **ELK**: A tool stack comprising an **Elasticsearch** cluster, **Logstash**, and **Kibana**. Elasticsearch (ES) is a no-SQL DBMS with powerful indexing capabilities.
   Kibana is a frontend for ES. Logstash acts as a pipeline that streams log messages from any source to ES. Together, these tools provide applications with a centralized, online-accessible logging platform.

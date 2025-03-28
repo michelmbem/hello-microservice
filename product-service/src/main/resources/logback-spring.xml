@@ -7,19 +7,7 @@
 
     <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
         <destination>${logstashHost}:${logstashPort}</destination>
-        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-            <providers>
-                <timestamp/>
-                <logger/>
-                <thread/>
-                <level/>
-                <message/>
-                <logstashMarkers/>
-                <arguments/>
-                <mdc/>
-                <context/>
-            </providers>
-        </encoder>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
     </appender>
 
     <logger name="org.addy.productservice" level="DEBUG" additivity="false">

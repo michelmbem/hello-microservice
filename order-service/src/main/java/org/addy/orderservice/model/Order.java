@@ -3,10 +3,10 @@ package org.addy.orderservice.model;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.addy.orderservice.enumeration.OrderStatus;
 import org.hibernate.annotations.CurrentTimestamp;
+import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.JdbcType;
 import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
@@ -39,9 +39,10 @@ public class Order {
     @Column(name = "payment_method_id")
     private UUID paymentMethodId;
 
-    @NotNull
+    @Generated
     @Enumerated(EnumType.STRING)
     @JdbcType(PostgreSQLEnumJdbcType.class)
+    @Column(insertable = false)
     private OrderStatus status;
 
     @Builder.Default

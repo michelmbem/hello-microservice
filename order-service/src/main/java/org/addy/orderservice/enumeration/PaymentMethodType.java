@@ -8,7 +8,8 @@ import lombok.RequiredArgsConstructor;
 public enum PaymentMethodType {
     CREDIT_CARD("credit card"),
     DEBIT_CARD( "debit card"),
-    PAYPAL( "PayPal");
+    PAYPAL( "PayPal"),
+    UNKNOWN("<unknown payment method>");
 
     private final String englishName;
 }

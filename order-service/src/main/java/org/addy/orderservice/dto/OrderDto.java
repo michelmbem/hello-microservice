@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -35,7 +37,7 @@ public class OrderDto {
     @JsonProperty("payment_method")
     private PaymentMethodDto paymentMethod;
 
-    @NotNull
+    @JsonProperty(access = READ_ONLY)
     private OrderStatus status;
 
     @Builder.Default
