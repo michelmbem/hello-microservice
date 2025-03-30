@@ -4,10 +4,15 @@
 
     <springProperty name="logstashHost" source="logging.logstash.host" />
     <springProperty name="logstashPort" source="logging.logstash.port" />
+    <springProperty name="appName" source="spring.application.name" />
 
     <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
         <destination>${logstashHost}:${logstashPort}</destination>
-        <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <customFields>
+                { "product": "hello-microservice", "module": "${appName}" }
+            </customFields>
+        </encoder>
     </appender>
 
     <logger name="org.addy.customerservice" level="DEBUG" additivity="false">

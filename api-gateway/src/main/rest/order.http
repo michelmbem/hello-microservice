@@ -5,26 +5,18 @@ Accept: application/json
 Authorization: Bearer {{user_access_token}}
 
 {
-  "delivery_date": "2025-03-29T18:00",
-  "customer": {
-    "id": "67e5f82aef6fdc192f720dc3"
-  },
-  "payment_method": {
-    "id": "bd8511ac-797b-42f6-9166-3549783a224e"
-  },
+  "delivery_date": "2025-04-01T18:00",
+  "customer": "67e5f82aef6fdc192f720dc3",
+  "payment_method": "bd8511ac-797b-42f6-9166-3549783a224e",
   "items": [
     {
-      "product": {
-        "id": "3370d3b1-51c3-4f43-a635-6540770ac737"
-      },
+      "product": "3370d3b1-51c3-4f43-a635-6540770ac737",
       "quantity": 1,
       "unit_price": 1500,
       "discount": 0
     },
     {
-      "product": {
-        "id": "cf4f81ca-7b81-4fa7-a0f7-2c42d006eac7"
-      },
+      "product": "cf4f81ca-7b81-4fa7-a0f7-2c42d006eac7",
       "quantity": 2,
       "unit_price": 1300,
       "discount": 0
@@ -38,7 +30,7 @@ Content-Type: application/json
 Accept: application/json
 
 ### Get an order by id
-GET http://localhost:8080/orders/1205339f-3f82-4b42-bc63-f2fbde60cd41
+GET http://localhost:8080/orders/c71f225f-e71b-4575-8369-4c0d45390899
 Content-Type: application/json
 Accept: application/json
 
@@ -48,7 +40,7 @@ Content-Type: application/json
 Accept: application/json
 
 ### Update an order
-PUT http://localhost:8080/orders/5bfaf29b-938f-410d-8f6f-4492bb41e3de
+PUT http://localhost:8080/orders/c71f225f-e71b-4575-8369-4c0d45390899
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{user_access_token}}
@@ -100,7 +92,7 @@ Authorization: Bearer {{user_access_token}}
 }
 
 ### Patch an order
-PATCH http://localhost:8080/orders/f8e55c11-b216-4f7d-b91d-96bfc5ade707
+PATCH http://localhost:8080/orders/c71f225f-e71b-4575-8369-4c0d45390899
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{user_access_token}}
@@ -109,13 +101,13 @@ Authorization: Bearer {{user_access_token}}
   "items": [
     {
       "op": "REMOVE",
-      "id": "1bce80f5-2bdd-4d28-9e79-ea70c383fbd0"
+      "id": "0c04b302-c47e-44c7-8a69-b40df873461d"
     },
     {
       "op": "UPDATE",
-      "id": "9444d857-0032-41ea-8734-f1f47be66c9d",
+      "id": "926fc2e3-a8fa-4ebe-8163-f8c4f11d5d56",
       "payload": {
-        "quantity": 2
+        "quantity": 1
       }
     }
   ]
