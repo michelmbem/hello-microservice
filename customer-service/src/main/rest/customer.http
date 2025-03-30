@@ -5,20 +5,14 @@ Accept: application/json
 Authorization: Bearer {{access_token}}
 
 {
-  "name": "Ethan Smith",
-  "email": "ethan.smith@dummy.xyz",
-  "password": "wxyzabcd",
-  "phone_number": "(567) 432-7890",
-  "address": "1234 Sunny Bd",
-  "city": "Edmonton",
-  "state": "AL",
-  "postal_code": "V6B 3E4",
-  "payment_methods": [
-    {
-      "type": "DEBIT_CARD",
-      "number": "5436-9870-5786-2431"
-    }
-  ]
+  "name": "Melissa Yamb",
+  "email": "melyamb@honey.abc",
+  "password": "1234.opqr",
+  "phone_number": "(432) 908-5657",
+  "address": "18 Chemin de la Côte-des-neiges",
+  "city": "Montréal",
+  "state": "QC",
+  "postal_code": "Q2C 5U9"
 }
 
 ### Get a list of all customers
@@ -27,8 +21,14 @@ Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}
 
+### Get a list of customers by name part
+GET http://localhost:8082/customers/by-name-part/ar
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{access_token}}
+
 ### Get a customer by id
-GET http://localhost:8082/customers/67d3561fcd1d3c4402ac6d12
+GET http://localhost:8082/customers/67d855f4b5115e4ee1980ab8
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}
@@ -74,6 +74,25 @@ Authorization: Bearer {{access_token}}
     {
       "type": "PAYPAL",
       "number": "ethan.smith@dummy.xyz"
+    }
+  ]
+}
+
+### Patch a customer
+PATCH http://localhost:8082/customers/67d855f4b5115e4ee1980ab8
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "name": "Markus Donahue Zunega Clark",
+  "payment_methods": [
+    {
+      "op": "UPDATE",
+      "id": "73ede2e5-778b-46d0-881a-a5dc23e5edb8",
+      "payload": {
+        "number": "mdzunega@donuts.org"
+      }
     }
   ]
 }

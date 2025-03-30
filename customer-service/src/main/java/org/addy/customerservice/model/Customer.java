@@ -13,6 +13,8 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.List;
 
+import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,6 +24,7 @@ import java.util.List;
 public class Customer {
 
     @Id
+    @JsonProperty(access = READ_ONLY)
     private String id;
 
     @NotNull

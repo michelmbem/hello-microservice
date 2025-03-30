@@ -1,8 +1,10 @@
 package org.addy.customerservice.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.addy.customerservice.model.Customer;
+import org.addy.customerservice.model.patch.CustomerPatch;
 import org.addy.customerservice.service.CustomerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,11 @@ public class CustomerController {
     @GetMapping
     public List<Customer> findAll() {
         return customerService.findAll();
+    }
+
+    @GetMapping("by-name-part/{namePart}")
+    public List<Customer> findByNamePart(@PathVariable String namePart) {
+        return customerService.findByNamePart(namePart);
     }
 
     @GetMapping("{id}")
@@ -44,7 +51,7 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity<Customer> persist(@RequestBody Customer customer) {
+    public ResponseEntity<Customer> persist(@Valid @RequestBody Customer customer) {
         customer = customerService.persist(customer);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -56,8 +63,15 @@ public class CustomerController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Void> update(@PathVariable String id, @RequestBody Customer customer) {
+    public ResponseEntity<Void> update(@PathVariable String id, @Valid @RequestBody Customer customer) {
         customerService.update(id, customer);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("{id}")
+    public ResponseEntity<Void> patch(@PathVariable String id, @Valid @RequestBody CustomerPatch customerPatch) {
+        customerService.patch(id, customerPatch);
 
         return ResponseEntity.noContent().build();
     }

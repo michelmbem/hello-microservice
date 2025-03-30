@@ -1,9 +1,12 @@
 package org.addy.customerservice.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.UUID;
+
+import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY;
 
 @Data
 @NoArgsConstructor
@@ -13,6 +16,7 @@ import java.util.UUID;
 public class PaymentMethod {
 
     @NotNull
+    @JsonProperty(access = READ_ONLY)
     private UUID id;
 
     @NotNull

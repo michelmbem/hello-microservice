@@ -3,6 +3,7 @@ package org.addy.customerservice.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.addy.customerservice.model.Customer;
+import org.addy.customerservice.model.patch.CustomerPatch;
 import org.addy.customerservice.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,10 @@ public class CustomerService {
 
     public List<Customer> findAll() {
         return customerRepository.findAll();
+    }
+
+    public List<Customer> findByNamePart(String namePart) {
+        return customerRepository.findByNameContainingIgnoreCase(namePart);
     }
 
     public Optional<Customer> findById(String id) {
@@ -41,15 +46,20 @@ public class CustomerService {
     }
 
     public void update(String id, Customer customer) {
-        customerRepository.findById(id).ifPresentOrElse(original -> {
-                    original.setName(customer.getName());
-                    original.setEmail(customer.getEmail());
-                    original.setPhoneNumber(customer.getPhoneNumber());
-                    original.setAddress(customer.getAddress());
-                    original.setCity(customer.getCity());
-                    original.setState(customer.getState());
-                    original.setPostalCode(customer.getPostalCode());
-                    original.setPaymentMethods(customer.getPaymentMethods());
+        customerRepository.findById(id).ifPresentOrElse(
+                original -> {
+                    copyAttributes(customer, original);
+                    customerRepository.save(original);
+                },
+                () -> {
+                    throw new NoSuchElementException("Customer with id '" + id + "' not found");
+                });
+    }
+
+    public void patch(String id, CustomerPatch customerPatch) {
+        customerRepository.findById(id).ifPresentOrElse(
+                original -> {
+                    customerPatch.applyTo(original);
                     customerRepository.save(original);
                 },
                 () -> {
@@ -58,9 +68,21 @@ public class CustomerService {
     }
 
     public void delete(String id) {
-        customerRepository.findById(id).ifPresentOrElse(customerRepository::delete,
+        customerRepository.findById(id).ifPresentOrElse(
+                customerRepository::delete,
                 () -> {
                     throw new NoSuchElementException("Customer with id '" + id + "' not found");
                 });
+    }
+
+    private static void copyAttributes(Customer given, Customer original) {
+        original.setName(given.getName());
+        original.setEmail(given.getEmail());
+        original.setPhoneNumber(given.getPhoneNumber());
+        original.setAddress(given.getAddress());
+        original.setCity(given.getCity());
+        original.setState(given.getState());
+        original.setPostalCode(given.getPostalCode());
+        original.setPaymentMethods(given.getPaymentMethods());
     }
 }
