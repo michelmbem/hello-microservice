@@ -47,7 +47,8 @@ public class ProductImageService {
     public void update(UUID id, ProductImageDto imageDto) {
         checkUniquenessOfDefault(imageDto);
 
-        productImageRepository.findById(id).ifPresentOrElse(image -> {
+        productImageRepository.findById(id).ifPresentOrElse(
+                image -> {
                     productImageMapper.map(imageDto, image);
                     productImageRepository.save(image);
                 },
@@ -57,7 +58,8 @@ public class ProductImageService {
     }
 
     public void delete(UUID id) {
-        productImageRepository.findById(id).ifPresentOrElse(productImageRepository::delete,
+        productImageRepository.findById(id).ifPresentOrElse(
+                productImageRepository::delete,
                 () -> {
                     throw new NoSuchElementException("ProductImage with id '" + id + "' not found");
                 });

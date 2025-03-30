@@ -20,6 +20,12 @@ Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}
 
+### Get a list of products by name part
+GET http://localhost:8084/products/by-name-part/ok
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{access_token}}
+
 ### Get a product by id
 GET http://localhost:8084/products/6d38e8f5-5173-43fa-aef7-60f6e890c13d
 Content-Type: application/json

@@ -51,7 +51,8 @@ public class OrderService {
     }
 
     public void delete(UUID id) {
-        orderRepository.findById(id).ifPresentOrElse(orderRepository::delete,
+        orderRepository.findById(id).ifPresentOrElse(
+                orderRepository::delete,
                 () -> {
                     throw new NoSuchElementException("Order with id '" + id + "' not found");
                 });

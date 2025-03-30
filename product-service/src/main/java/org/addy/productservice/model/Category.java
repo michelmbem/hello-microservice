@@ -4,7 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.PrePersist;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 import java.util.Collection;
@@ -21,7 +21,7 @@ public class Category {
     @Id
     private UUID id;
 
-    @NotNull
+    @NotEmpty
     private String name;
 
     private String description;
@@ -31,6 +31,8 @@ public class Category {
 
     @PrePersist
     public void init() {
-        if (id == null) id = UUID.randomUUID();
+        if (id == null) {
+            id = UUID.randomUUID();
+        }
     }
 }

@@ -1,6 +1,7 @@
 package org.addy.productservice.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -19,11 +20,10 @@ public class Product {
     @Id
     private UUID id;
 
-    @NotNull
+    @NotEmpty
     private String name;
 
-    @NotNull
-    @Column(name = "unit_price")
+    @Column(name = "unit_price", nullable = false)
     private BigDecimal unitPrice;
 
     @Column(name = "discounted_price")
@@ -41,6 +41,8 @@ public class Product {
 
     @PrePersist
     public void init() {
-        if (id == null) id = UUID.randomUUID();
+        if (id == null) {
+            id = UUID.randomUUID();
+        }
     }
 }

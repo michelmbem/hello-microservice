@@ -28,6 +28,11 @@ public class ProductController {
         return productService.findAll();
     }
 
+    @GetMapping("by-name-part/{namePart}")
+    public List<ProductDto> findByNamePart(@PathVariable String namePart) {
+        return productService.findByNamePart(namePart);
+    }
+
     @GetMapping("{id}")
     public ResponseEntity<ProductDto> findById(@PathVariable UUID id) {
         return productService.findById(id).map(ResponseEntity::ok).orElseThrow();

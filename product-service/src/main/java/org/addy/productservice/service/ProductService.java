@@ -30,6 +30,10 @@ public class ProductService {
         return productRepository.findByCategoriesId(categoryId).stream().map(productMapper::map).toList();
     }
 
+    public List<ProductDto> findByNamePart(String namePart) {
+        return productRepository.findByNameContainingIgnoreCase(namePart).stream().map(productMapper::map).toList();
+    }
+
     public Optional<ProductDto> findById(UUID id) {
         return productRepository.findById(id).map(productMapper::map);
     }
@@ -46,7 +50,8 @@ public class ProductService {
     }
 
     public void update(UUID id, ProductDto productDto) {
-        productRepository.findById(id).ifPresentOrElse(product -> {
+        productRepository.findById(id).ifPresentOrElse(
+                product -> {
                     productMapper.map(productDto, product);
                     productRepository.save(product);
                 },
@@ -56,7 +61,8 @@ public class ProductService {
     }
 
     public void delete(UUID id) {
-        productRepository.findById(id).ifPresentOrElse(productRepository::delete,
+        productRepository.findById(id).ifPresentOrElse(
+                productRepository::delete,
                 () -> {
                     throw new NoSuchElementException("Product with id '" + id + "' not found");
                 });

@@ -1,6 +1,7 @@
 package org.addy.productservice.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.validator.constraints.URL;
@@ -19,7 +20,7 @@ public class ProductImage {
     @Id
     private UUID id;
 
-    @NotNull
+    @NotEmpty
     @URL
     private String url;
 

@@ -42,7 +42,8 @@ public class CategoryService {
     }
 
     public void update(UUID id, CategoryDto categoryDto) {
-        categoryRepository.findById(id).ifPresentOrElse(category -> {
+        categoryRepository.findById(id).ifPresentOrElse(
+                category -> {
                     categoryMapper.map(categoryDto, category);
                     categoryRepository.save(category);
                 },
@@ -52,7 +53,8 @@ public class CategoryService {
     }
 
     public void delete(UUID id) {
-        categoryRepository.findById(id).ifPresentOrElse(categoryRepository::delete,
+        categoryRepository.findById(id).ifPresentOrElse(
+                categoryRepository::delete,
                 () -> {
                     throw new NoSuchElementException("Category with id '" + id + "' not found");
                 });

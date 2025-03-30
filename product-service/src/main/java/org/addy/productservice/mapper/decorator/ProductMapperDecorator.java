@@ -39,9 +39,9 @@ public abstract class ProductMapperDecorator implements ProductMapper {
 
     private void mapCategories(ProductDto productDto, Product product) {
         if (productDto.getCategories() != null) {
-            Collection<Category> categories = productDto.getCategories().stream()
-                    .map(categoryDto ->
-                            categoryRepository.findById(categoryDto.getId()).orElseThrow())
+            Collection<Category> categories = productDto.getCategories()
+                    .stream()
+                    .map(categoryDto -> categoryRepository.findById(categoryDto.getId()).orElseThrow())
                     .collect(Collectors.toSet());
 
             product.setCategories(categories);
