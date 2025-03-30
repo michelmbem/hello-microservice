@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.addy.orderservice.dto.OrderDto;
+import org.addy.orderservice.dto.patch.OrderPatch;
 import org.addy.orderservice.service.NotificationService;
 import org.addy.orderservice.service.OrderService;
 import org.springframework.http.ResponseEntity;
@@ -56,6 +57,15 @@ public class OrderController {
     @PreAuthorize("hasRole('order-manager')")
     public ResponseEntity<Void> update(@PathVariable UUID id, @Valid @RequestBody OrderDto orderDto) {
         orderDto = orderService.update(id, orderDto);
+        notificationService.orderUpdated(orderDto);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("{id}")
+    @PreAuthorize("hasRole('order-manager')")
+    public ResponseEntity<Void> patch(@PathVariable UUID id, @Valid @RequestBody OrderPatch orderPatch) {
+        OrderDto orderDto = orderService.patch(id, orderPatch);
         notificationService.orderUpdated(orderDto);
 
         return ResponseEntity.noContent().build();

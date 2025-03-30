@@ -1,15 +1,17 @@
 package org.addy.orderservice.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.addy.orderservice.dto.deserializer.CustomerDtoDeserializer;
+import org.addy.orderservice.dto.deserializer.PaymentMethodDtoDeserializer;
 import org.addy.orderservice.enumeration.OrderStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,25 +34,28 @@ public class OrderDto {
     private LocalDateTime deliveryDate;
 
     @NotNull
+    @JsonDeserialize(using = CustomerDtoDeserializer.class)
     private CustomerDto customer;
 
     @JsonProperty("payment_method")
+    @JsonDeserialize(using = PaymentMethodDtoDeserializer.class)
     private PaymentMethodDto paymentMethod;
 
     @JsonProperty(access = READ_ONLY)
     private OrderStatus status;
 
-    @Builder.Default
     @Valid
     @NotEmpty
-    List<OrderItemDto> items = new ArrayList<>();
+    List<OrderItemDto> items;
 
     @JsonProperty("total_price")
     public BigDecimal getTotalPrice() {
         BigDecimal totalPrice = BigDecimal.ZERO;
 
-        for (OrderItemDto item : items) {
-            totalPrice = totalPrice.add(item.getTotalPrice());
+        if (items != null) {
+            for (OrderItemDto item : items) {
+                totalPrice = totalPrice.add(item.getTotalPrice());
+            }
         }
 
         return totalPrice;

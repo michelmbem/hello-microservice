@@ -91,8 +91,18 @@ public abstract class OrderMapperDecorator implements OrderMapper {
     private void syncItems(OrderDto orderDto, Order order) {
         List<OrderItemDto> givenItems = orderDto.getItems();
         List<OrderItem> originalItems = order.getItems();
-        List<OrderItem> newItems = new ArrayList<>();
+        List<OrderItem> addedItems = new ArrayList<>();
         List<OrderItem> deletedItems = new ArrayList<>();
+
+        if (givenItems == null) {
+            givenItems = List.of();
+            orderDto.setItems(givenItems);
+        }
+
+        if (originalItems == null) {
+            originalItems = new ArrayList<>();
+            order.setItems(originalItems);
+        }
 
         for (OrderItemDto givenItem : givenItems) {
             OrderItem originalItem = originalItems.stream()
@@ -105,7 +115,7 @@ public abstract class OrderMapperDecorator implements OrderMapper {
             } else {
                 OrderItem newItem = itemMapper.map(givenItem);
                 newItem.setOrder(order);
-                newItems.add(newItem);
+                addedItems.add(newItem);
             }
         }
 
@@ -118,7 +128,7 @@ public abstract class OrderMapperDecorator implements OrderMapper {
         }
 
         originalItems.removeAll(deletedItems);
-        originalItems.addAll(newItems);
+        originalItems.addAll(addedItems);
 
         short rank = 1;
         for (OrderItem originalItem : originalItems) {

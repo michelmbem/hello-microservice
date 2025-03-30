@@ -3,6 +3,7 @@ package org.addy.orderservice.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.addy.orderservice.dto.OrderDto;
+import org.addy.orderservice.dto.patch.OrderPatch;
 import org.addy.orderservice.mapper.OrderMapper;
 import org.addy.orderservice.model.Order;
 import org.addy.orderservice.repository.OrderRepository;
@@ -45,6 +46,15 @@ public class OrderService {
         return orderRepository.findById(id)
                 .map(order -> {
                     orderMapper.map(orderDto, order);
+                    return orderMapper.map(orderRepository.saveAndFlush(order));
+                })
+                .orElseThrow(() -> new NoSuchElementException("Order with id '" + id + "' not found"));
+    }
+
+    public OrderDto patch(UUID id, OrderPatch orderPatch) {
+        return orderRepository.findById(id)
+                .map(order -> {
+                    orderPatch.applyTo(order);
                     return orderMapper.map(orderRepository.saveAndFlush(order));
                 })
                 .orElseThrow(() -> new NoSuchElementException("Order with id '" + id + "' not found"));

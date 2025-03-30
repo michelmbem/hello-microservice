@@ -1,10 +1,12 @@
 package org.addy.orderservice.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
+import org.addy.orderservice.dto.deserializer.ProductDtoDeserializer;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -19,6 +21,7 @@ public class OrderItemDto {
     private UUID id;
 
     @NotNull
+    @JsonDeserialize(using = ProductDtoDeserializer.class)
     private ProductDto product;
 
     @NotNull

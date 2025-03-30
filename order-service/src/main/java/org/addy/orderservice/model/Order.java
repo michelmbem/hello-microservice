@@ -45,15 +45,16 @@ public class Order {
     @Column(insertable = false)
     private OrderStatus status;
 
-    @Builder.Default
     @Valid
     @NotEmpty
     @OrderBy("rank ASC")
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<OrderItem> items = new ArrayList<>();
+    List<OrderItem> items;
 
     @PrePersist
     public void init() {
-        if (id == null) id = UUID.randomUUID();
+        if (id == null) {
+            id = UUID.randomUUID();
+        }
     }
 }

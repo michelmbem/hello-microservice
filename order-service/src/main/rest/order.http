@@ -5,20 +5,14 @@ Accept: application/json
 Authorization: Bearer {{access_token}}
 
 {
-  "delivery_date": "2025-03-24T18:30",
-  "customer": {
-    "id": "67d354e09c577d16ffd556e0"
-  },
-  "payment_method": {
-    "id": "b3e582fc-5463-4297-a046-83caec835af3"
-  },
+  "delivery_date": "2025-04-01T13:00",
+  "customer": "67e5f82aef6fdc192f720dc3",
+  "payment_method": "bd8511ac-797b-42f6-9166-3549783a224e",
   "items": [
     {
-      "product": {
-        "id": "2d87bdf1-781f-42ae-a9a1-38d1b23bbb3f"
-      },
+      "product": "2d87bdf1-781f-42ae-a9a1-38d1b23bbb3f",
       "quantity": 1,
-      "unit_price": 1200,
+      "unit_price": 1300,
       "discount": 0
     },
     {
@@ -26,7 +20,7 @@ Authorization: Bearer {{access_token}}
         "id": "cf4f81ca-7b81-4fa7-a0f7-2c42d006eac7"
       },
       "quantity": 1,
-      "unit_price": 1000,
+      "unit_price": 1050,
       "discount": 0
     }
   ]
@@ -37,17 +31,17 @@ GET http://localhost:8083/orders
 Content-Type: application/json
 Accept: application/json
 
-### Get a order by id
-GET http://localhost:8083/orders/0bd95565-813a-4384-a0c4-af97151c55ec
+### Get an order by id
+GET http://localhost:8083/orders/f8e55c11-b216-4f7d-b91d-96bfc5ade707
 Content-Type: application/json
 Accept: application/json
 
-### Get a order by customer
+### Get an order by customer
 GET http://localhost:8083/orders/by-customer/67d354e09c577d16ffd556e0
 Content-Type: application/json
 Accept: application/json
 
-### Update a order
+### Update an order
 PUT http://localhost:8083/orders/0bd95565-813a-4384-a0c4-af97151c55ec
 Content-Type: application/json
 Accept: application/json
@@ -97,8 +91,30 @@ Authorization: Bearer {{access_token}}
   ]
 }
 
-### Delete a order
-DELETE http://localhost:8083/orders/0bd95565-813a-4384-a0c4-af97151c55ec
+### Patch an order
+PATCH http://localhost:8083/orders/f8e55c11-b216-4f7d-b91d-96bfc5ade707
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "items": [
+    {
+      "op": "REMOVE",
+      "id": "1bce80f5-2bdd-4d28-9e79-ea70c383fbd0"
+    },
+    {
+      "op": "UPDATE",
+      "id": "9444d857-0032-41ea-8734-f1f47be66c9d",
+      "payload": {
+        "quantity": 2
+      }
+    }
+  ]
+}
+
+### Delete an order
+DELETE http://localhost:8083/orders/1365129d-6758-4873-a2d4-e11c05027971
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}

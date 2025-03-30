@@ -42,6 +42,8 @@ public class OrderItem {
 
     @PrePersist
     public void init() {
-        if (id == null) id = UUID.randomUUID();
+        if (id == null) {
+            id = UUID.randomUUID();
+        }
     }
 }

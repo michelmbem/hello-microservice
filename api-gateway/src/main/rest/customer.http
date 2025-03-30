@@ -27,6 +27,12 @@ Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{client_access_token}}
 
+### Get a list of customers by name part
+GET http://localhost:8080/customers/by-name-part/ar
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{client_access_token}}
+
 ### Get a customer by id
 GET http://localhost:8080/customers/67e5f82aef6fdc192f720dc3
 Content-Type: application/json
@@ -74,6 +80,25 @@ Authorization: Bearer {{client_access_token}}
     {
       "type": "PAYPAL",
       "number": "ethan.smith@dummy.xyz"
+    }
+  ]
+}
+
+### Patch a customer
+PATCH http://localhost:8080/customers/67d855f4b5115e4ee1980ab8
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{client_access_token}}
+
+{
+  "name": "Markus Donahue Zunega Clark",
+  "payment_methods": [
+    {
+      "op": "UPDATE",
+      "id": "73ede2e5-778b-46d0-881a-a5dc23e5edb8",
+      "payload": {
+        "number": "mdzunega@donuts.org"
+      }
     }
   ]
 }
