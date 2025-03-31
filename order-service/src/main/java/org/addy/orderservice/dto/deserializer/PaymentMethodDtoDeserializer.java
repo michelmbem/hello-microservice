@@ -21,7 +21,7 @@ public class PaymentMethodDtoDeserializer extends JsonDeserializer<PaymentMethod
         } else if (node.isObject() && node.has("id")) {
             pmId = UUID.fromString(node.get("id").asText());
         } else {
-            throw new IllegalArgumentException("Could not parse the given expression as a payment method reference");
+            throw new IllegalArgumentException("Could not parse the given expression as a reference to a payment method");
         }
 
         return PaymentMethodDto.builder()

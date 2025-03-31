@@ -20,7 +20,7 @@ public class CustomerDtoDeserializer extends JsonDeserializer<CustomerDto> {
         } else if (node.isObject() && node.has("id")) {
             customerId = node.get("id").asText();
         } else {
-            throw new IllegalArgumentException("Could not parse the given expression as a customer reference");
+            throw new IllegalArgumentException("Could not parse the given expression as a reference to a customer");
         }
 
         return CustomerDto.builder()

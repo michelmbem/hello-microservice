@@ -21,7 +21,7 @@ public class ProductDtoDeserializer extends JsonDeserializer<ProductDto> {
         } else if (node.isObject() && node.has("id")) {
             productId = UUID.fromString(node.get("id").asText());
         } else {
-            throw new IllegalArgumentException("Could not parse the given expression as a product reference");
+            throw new IllegalArgumentException("Could not parse the given expression as a reference to a product");
         }
 
         return ProductDto.builder()

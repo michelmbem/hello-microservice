@@ -74,9 +74,9 @@ public record OrderPatch(
 
     @Override
     public @NonNull Order toEntity() {
-        var customer = new Order();
-        applyTo(customer);
+        var order = new Order();
+        applyTo(order);
 
-        return customer;
+        return order;
     }
 }
