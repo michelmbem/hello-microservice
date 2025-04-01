@@ -1,4 +1,4 @@
-package org.addy.customerservice.model.patch.core;
+package org.addy.model.patch;
 
 public enum PatchOperation {
     ADD,

@@ -41,7 +41,3 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
-
-tasks.register('wrapper', Wrapper) {}
-
-tasks.register("prepareKotlinBuildScriptModel") {}

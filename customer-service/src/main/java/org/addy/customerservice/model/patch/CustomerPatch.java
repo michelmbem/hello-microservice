@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
 import org.addy.customerservice.model.Customer;
 import org.addy.customerservice.model.PaymentMethod;
-import org.addy.customerservice.model.patch.core.PatchItem;
-import org.addy.customerservice.model.patch.core.PatchModel;
+import org.addy.model.patch.PatchItem;
+import org.addy.model.patch.PatchModel;
 import org.springframework.lang.NonNull;
 
 import java.util.ArrayList;

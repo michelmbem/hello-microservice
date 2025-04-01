@@ -1,5 +1,6 @@
 rootProject.name = 'hello-microservice'
 
+include ':core-library'
 include ':config-server'
 include ':discovery-server'
 include ':product-service'

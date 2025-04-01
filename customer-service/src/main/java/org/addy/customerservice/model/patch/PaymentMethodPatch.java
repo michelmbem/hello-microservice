@@ -3,7 +3,7 @@ package org.addy.customerservice.model.patch;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.addy.customerservice.model.PaymentMethod;
 import org.addy.customerservice.model.PaymentMethodType;
-import org.addy.customerservice.model.patch.core.PatchModel;
+import org.addy.model.patch.PatchModel;
 import org.springframework.lang.NonNull;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;

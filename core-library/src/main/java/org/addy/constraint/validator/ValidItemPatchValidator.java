@@ -1,9 +1,9 @@
-package org.addy.customerservice.constraint.validator;
+package org.addy.constraint.validator;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import org.addy.customerservice.constraint.ValidItemPatch;
-import org.addy.customerservice.model.patch.core.PatchItem;
+import org.addy.constraint.ValidItemPatch;
+import org.addy.model.patch.PatchItem;
 
 public final class ValidItemPatchValidator implements
         ConstraintValidator<ValidItemPatch, PatchItem<?, ?>> {

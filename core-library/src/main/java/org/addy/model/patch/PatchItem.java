@@ -1,8 +1,8 @@
-package org.addy.customerservice.model.patch.core;
+package org.addy.model.patch;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotNull;
-import org.addy.customerservice.constraint.ValidItemPatch;
+import org.addy.constraint.ValidItemPatch;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 

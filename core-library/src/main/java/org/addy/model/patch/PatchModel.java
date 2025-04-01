@@ -1,4 +1,4 @@
-package org.addy.orderservice.dto.patch.core;
+package org.addy.model.patch;
 
 import org.springframework.lang.NonNull;
 

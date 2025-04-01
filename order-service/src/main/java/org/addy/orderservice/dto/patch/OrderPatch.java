@@ -1,8 +1,9 @@
 package org.addy.orderservice.dto.patch;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import org.addy.orderservice.dto.patch.core.PatchItem;
-import org.addy.orderservice.dto.patch.core.PatchModel;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.addy.model.patch.PatchItem;
+import org.addy.model.patch.PatchModel;
 import org.addy.orderservice.model.Order;
 import org.addy.orderservice.model.OrderItem;
 import org.springframework.lang.NonNull;
@@ -18,8 +19,11 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
 @JsonInclude(NON_NULL)
 public record OrderPatch(
+        @JsonProperty("delivery_date")
         LocalDateTime deliveryDate,
+        @JsonProperty("customer_id")
         String customerId,
+        @JsonProperty("payment_method_id")
         UUID paymentMethodId,
         List<PatchItem<OrderItemPatch, UUID>> items
 ) implements PatchModel<Order> {

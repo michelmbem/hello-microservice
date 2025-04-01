@@ -1,8 +1,8 @@
-package org.addy.customerservice.constraint;
+package org.addy.constraint;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-import org.addy.customerservice.constraint.validator.ValidItemPatchValidator;
+import org.addy.constraint.validator.ValidItemPatchValidator;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;

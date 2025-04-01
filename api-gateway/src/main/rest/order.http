@@ -5,21 +5,20 @@ Accept: application/json
 Authorization: Bearer {{user_access_token}}
 
 {
-  "delivery_date": "2025-04-01T18:00",
-  "customer": "67e5f82aef6fdc192f720dc3",
-  "payment_method": "bd8511ac-797b-42f6-9166-3549783a224e",
+  "delivery_date": "2025-04-01T11:00",
+  "customer": "67d66b4efa38ba6ba572dac6",
   "items": [
     {
-      "product": "3370d3b1-51c3-4f43-a635-6540770ac737",
+      "product": "2e93e208-26f0-46bd-a78d-1595a9c1a3b4",
       "quantity": 1,
-      "unit_price": 1500,
-      "discount": 0
+      "unit_price": 2000,
+      "discount": 0.1
     },
     {
-      "product": "cf4f81ca-7b81-4fa7-a0f7-2c42d006eac7",
-      "quantity": 2,
-      "unit_price": 1300,
-      "discount": 0
+      "product": "779d1295-f968-442e-86e7-e3087c89e1ed",
+      "quantity": 1,
+      "unit_price": 1500,
+      "discount": 0.1
     }
   ]
 }
@@ -30,7 +29,7 @@ Content-Type: application/json
 Accept: application/json
 
 ### Get an order by id
-GET http://localhost:8080/orders/c71f225f-e71b-4575-8369-4c0d45390899
+GET http://localhost:8080/orders/d20b90f1-874b-47fe-bca3-edb41040e36d
 Content-Type: application/json
 Accept: application/json
 
@@ -92,22 +91,19 @@ Authorization: Bearer {{user_access_token}}
 }
 
 ### Patch an order
-PATCH http://localhost:8080/orders/c71f225f-e71b-4575-8369-4c0d45390899
+PATCH http://localhost:8080/orders/d20b90f1-874b-47fe-bca3-edb41040e36d
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{user_access_token}}
 
 {
+  "payment_method_id": "cd084869-b63a-4abc-bb5b-f08d046f6130",
   "items": [
     {
-      "op": "REMOVE",
-      "id": "0c04b302-c47e-44c7-8a69-b40df873461d"
-    },
-    {
       "op": "UPDATE",
-      "id": "926fc2e3-a8fa-4ebe-8163-f8c4f11d5d56",
+      "id": "b5db78ae-7195-42fe-85cf-950680c5563a",
       "payload": {
-        "quantity": 1
+        "quantity": 5
       }
     }
   ]
