@@ -6,19 +6,19 @@ Authorization: Bearer {{user_access_token}}
 
 {
   "delivery_date": "2025-04-01T11:00",
-  "customer": "67d66b4efa38ba6ba572dac6",
+  "customer": "67eda2c96734684cd21bd2d8",
   "items": [
     {
       "product": "2e93e208-26f0-46bd-a78d-1595a9c1a3b4",
-      "quantity": 1,
-      "unit_price": 2000,
-      "discount": 0.1
+      "quantity": 2,
+      "unit_price": 1800,
+      "discount": 0
     },
     {
       "product": "779d1295-f968-442e-86e7-e3087c89e1ed",
-      "quantity": 1,
-      "unit_price": 1500,
-      "discount": 0.1
+      "quantity": 2,
+      "unit_price": 1300,
+      "discount": 0
     }
   ]
 }
@@ -29,7 +29,7 @@ Content-Type: application/json
 Accept: application/json
 
 ### Get an order by id
-GET http://localhost:8080/orders/d20b90f1-874b-47fe-bca3-edb41040e36d
+GET http://localhost:8080/orders/f6c4d27e-fc00-4bb3-b938-a29504b444ec
 Content-Type: application/json
 Accept: application/json
 
@@ -91,26 +91,27 @@ Authorization: Bearer {{user_access_token}}
 }
 
 ### Patch an order
-PATCH http://localhost:8080/orders/d20b90f1-874b-47fe-bca3-edb41040e36d
+PATCH http://localhost:8080/orders/f6c4d27e-fc00-4bb3-b938-a29504b444ec
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{user_access_token}}
 
 {
-  "payment_method_id": "cd084869-b63a-4abc-bb5b-f08d046f6130",
   "items": [
     {
-      "op": "UPDATE",
-      "id": "b5db78ae-7195-42fe-85cf-950680c5563a",
+      "op": "ADD",
       "payload": {
-        "quantity": 5
+        "product_id": "b502ac59-68f7-4bee-8302-93b764464632",
+        "unit_price": 300,
+        "discount": 0,
+        "quantity": 2
       }
     }
   ]
 }
 
 ### Delete an order
-DELETE http://localhost:8080/orders/1205339f-3f82-4b42-bc63-f2fbde60cd41
+DELETE http://localhost:8080/orders/53be75da-d7a1-42f4-a4e0-5bb6b7ee8219
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{user_access_token}}

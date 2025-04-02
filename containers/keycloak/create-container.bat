@@ -1,1 +1,1 @@
-docker run -d --name keycloak --restart unless-stopped -p 8181:8080 -e KC_BOOTSTRAP_ADMIN_USERNAME=admin -e KC_BOOTSTRAP_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:latest start-dev
+docker run -d --name keycloak --restart unless-stopped -p 8181:8080 -e KC_BOOTSTRAP_ADMIN_USERNAME=admin -e KC_BOOTSTRAP_ADMIN_PASSWORD=admin -v .\volume\data:/opt/keycloak/data -v .\volume\providers:/opt/keycloak/providers quay.io/keycloak/keycloak:latest start-dev

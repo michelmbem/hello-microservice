@@ -13,11 +13,13 @@ import org.addy.orderservice.model.OrderItem;
 import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 import static org.addy.orderservice.util.Constants.*;
 
@@ -39,8 +41,12 @@ public abstract class OrderMapperDecorator implements OrderMapper {
 
         customerService.findById(order.getCustomerId()).ifPresentOrElse(
                 customerDto  -> {
+                    Stream<PaymentMethodDto> paymentMethodDtoStream = customerDto.getPaymentMethods() != null
+                            ? customerDto.getPaymentMethods().stream()
+                            : Stream.empty();
+
                     orderDto.setCustomer(customerDto);
-                    orderDto.setPaymentMethod(customerDto.getPaymentMethods().stream()
+                    orderDto.setPaymentMethod(paymentMethodDtoStream
                             .filter(pm -> Objects.equals(pm.getId(), order.getPaymentMethodId()))
                             .findFirst()
                             .orElse(unknownPaymentMethod(order.getPaymentMethodId())));
@@ -68,24 +74,32 @@ public abstract class OrderMapperDecorator implements OrderMapper {
     }
 
     private static CustomerDto unknownCustomer(String customerId) {
-        return CustomerDto.builder()
-                .id(customerId)
-                .name("<unknown customer>")
-                .email(UNKNOWN_ATTRIBUTE_VALUE)
-                .phoneNumber(UNKNOWN_ATTRIBUTE_VALUE)
-                .address(UNKNOWN_ATTRIBUTE_VALUE)
-                .city(UNKNOWN_ATTRIBUTE_VALUE)
-                .state(UNKNOWN_ATTRIBUTE_VALUE)
-                .postalCode(UNKNOWN_ATTRIBUTE_VALUE)
-                .build();
+        if (StringUtils.hasText(customerId)) {
+            return CustomerDto.builder()
+                    .id(customerId)
+                    .name("<unknown customer>")
+                    .email(UNKNOWN_ATTRIBUTE_VALUE)
+                    .phoneNumber(UNKNOWN_ATTRIBUTE_VALUE)
+                    .address(UNKNOWN_ATTRIBUTE_VALUE)
+                    .city(UNKNOWN_ATTRIBUTE_VALUE)
+                    .state(UNKNOWN_ATTRIBUTE_VALUE)
+                    .postalCode(UNKNOWN_ATTRIBUTE_VALUE)
+                    .build();
+        }
+
+        return null;
     }
 
     private static PaymentMethodDto unknownPaymentMethod(UUID paymentMethodId) {
-        return PaymentMethodDto.builder()
-                .id(paymentMethodId)
-                .type(PaymentMethodType.UNKNOWN)
-                .number(UNKNOWN_ATTRIBUTE_VALUE)
-                .build();
+        if (paymentMethodId != null) {
+            return PaymentMethodDto.builder()
+                    .id(paymentMethodId)
+                    .type(PaymentMethodType.UNKNOWN)
+                    .number(UNKNOWN_ATTRIBUTE_VALUE)
+                    .build();
+        }
+
+        return null;
     }
 
     private void syncItems(OrderDto orderDto, Order order) {

@@ -4,7 +4,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.addy.messaging.Notification;
 import org.addy.orderservice.dto.OrderDto;
+import org.addy.orderservice.dto.PaymentMethodDto;
+import org.addy.orderservice.enumeration.PaymentMethodType;
 import org.addy.orderservice.notification.NotificationSender;
+import org.addy.orderservice.util.Constants;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -49,13 +52,11 @@ public class NotificationService {
                 "deliveryDate", date2str(orderDto.getDeliveryDate()),
                 "customer", Map.of(
                         "name", orderDto.getCustomer().getName(),
-                        "address", orderDto.getCustomer().getAddress(),
-                        "city", orderDto.getCustomer().getCity(),
-                        "state", orderDto.getCustomer().getState(),
-                        "postalCode", orderDto.getCustomer().getPostalCode()),
-                "paymentMethod", Map.of(
-                        "type", orderDto.getPaymentMethod().getType().getEnglishName(),
-                        "number", orderDto.getPaymentMethod().getNumberEnd()),
+                        "address", emptyIfNull(orderDto.getCustomer().getAddress()),
+                        "city", emptyIfNull(orderDto.getCustomer().getCity()),
+                        "state", emptyIfNull(orderDto.getCustomer().getState()),
+                        "postalCode", emptyIfNull(orderDto.getCustomer().getPostalCode())),
+                "paymentMethod", paymentMethodAsMap(orderDto.getPaymentMethod()),
                 "items", orderDto.getItems().stream().map(item -> Map.of(
                         "productName", item.getProduct().getName(),
                         "quantity", item.getQuantity(),
@@ -68,5 +69,23 @@ public class NotificationService {
         return dateTime != null
                 ? dateTime.format(DateTimeFormatter.ofPattern("MMM d, yyyy 'at' HH:mm").localizedBy(Locale.ENGLISH))
                 : "";
+    }
+
+    private static String emptyIfNull(String str) {
+        return str != null ? str : "";
+    }
+
+    private static Map<String, Object> paymentMethodAsMap(PaymentMethodDto pm) {
+        if (pm != null) {
+            return Map.of(
+                    "type", pm.getType().getEnglishName(),
+                    "number", pm.getNumberEnd()
+            );
+        }
+
+        return Map.of(
+                "type", PaymentMethodType.UNKNOWN.name(),
+                "number", Constants.UNKNOWN_ATTRIBUTE_VALUE
+        );
     }
 }

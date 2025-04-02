@@ -17,7 +17,7 @@ grant_type=password&client_id=order-service&username=danny&password=danny.1
 POST http://localhost:8181/realms/hello-microservice/protocol/openid-connect/token
 Content-Type: application/x-www-form-urlencoded
 
-grant_type=client_credentials&client_id=customer-service&client_secret=hu4rvwyZC2CKWKjuS4QE9rH2n0jcAQaw
+grant_type=client_credentials&client_id=customer-service&client_secret=oISF6rNs9vVVMxSD0VCfdJ9ZJw7v478K
 
 > {%
     client.test("Access token obtained from authorization server", () => {

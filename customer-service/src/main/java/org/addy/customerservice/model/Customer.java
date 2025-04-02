@@ -6,11 +6,14 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.addy.customerservice.converter.LocalDateTimeConverter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.convert.ValueConverter;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY;
@@ -52,6 +55,13 @@ public class Customer {
     @Field("postal_code")
     @JsonProperty("postal_code")
     private String postalCode;
+
+    @Field("created_at")
+    @JsonProperty(value = "created_at", access = READ_ONLY)
+    @ValueConverter(LocalDateTimeConverter.class)
+    private LocalDateTime createdAt;
+
+    private boolean active;
 
     @Valid
     @Field("payment_methods")

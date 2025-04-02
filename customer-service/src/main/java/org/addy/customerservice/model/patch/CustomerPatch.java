@@ -27,6 +27,7 @@ public record CustomerPatch(
         String state,
         @JsonProperty("postal_code")
         String postalCode,
+        Boolean active,
         @Valid @JsonProperty("payment_methods")
         List<PatchItem<PaymentMethodPatch, UUID>> paymentMethods
 ) implements PatchModel<Customer> {
@@ -59,6 +60,10 @@ public record CustomerPatch(
 
         if (postalCode != null) {
             entity.setPostalCode(postalCode);
+        }
+
+        if (active != null) {
+            entity.setActive(active);
         }
 
         if (paymentMethods != null) {

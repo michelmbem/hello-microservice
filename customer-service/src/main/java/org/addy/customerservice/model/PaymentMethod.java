@@ -15,7 +15,6 @@ import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY;
 @EqualsAndHashCode(of = "id")
 public class PaymentMethod {
 
-    @NotNull
     @JsonProperty(access = READ_ONLY)
     private UUID id;
 

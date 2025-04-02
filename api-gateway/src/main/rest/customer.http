@@ -5,18 +5,19 @@ Accept: application/json
 Authorization: Bearer {{client_access_token}}
 
 {
-  "name": "Yann Mandeng",
-  "email": "yann.mandeng@dummy.xyz",
-  "password": "qwertyuiop",
-  "phone_number": "(528) 936-4147",
-  "address": "410 Avenue JAB",
-  "city": "Ngambè",
+  "name": "Maeva Hiol",
+  "email": "maeva.hiol@addy.org",
+  "password": "a1m3h1",
+  "phone_number": "6 97 00 70 69",
+  "address": "Efoulan",
+  "city": "Yaoundé",
   "state": "CM",
-  "postal_code": "X6S K0L",
+  "postal_code": "00237",
+  "active": true,
   "payment_methods": [
     {
-      "type": "CREDIT_CARD",
-      "number": "9317-4682-7319-0123"
+      "type": "PAYPAL",
+      "number": "maeva.hiol@addy.org"
     }
   ]
 }

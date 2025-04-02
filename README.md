@@ -8,6 +8,7 @@ A simple project that demonstrates how to create a microservices application wit
 
 The project includes the following modules:
 
+* **Core Library**: a small library that contains the definitions of functionalities shared by other modules.
 * **Configuration Server**: Provides configuration properties to other modules.
 * **Eureka Discovery Server**: Allows microservices to dynamically discover each other and also acts as a load balancer.
 * **Notification Service**: Listens for events sent to a Kafka topic and sends emails in response.
@@ -15,6 +16,7 @@ The project includes the following modules:
 * **Product Service**: Manages products, product categories, and product images stored in a PostgreSQL database.
 * **Order Service**: Manages orders. Interacts with the Customer and Product services. Sends events to a Kafka topic to notify customers of the receipt or update of their orders.
 * **API Gateway**: Allows access to all services from a single host.
+* **Keycloak Providers**: an extension for Keycloak that allows it to use the Customer Service database as a user storage.
 
 ## Resources
 
@@ -33,21 +35,26 @@ These are:
 Notes:
 
 1. *docker-compose.yml* files and launch scripts are provided for each server in the *containers* subdirectory of the project directory.
-2. You must manually recreate the *hello-microservice* Keycloak realm used in this project. Its structure is shown in the diagram below.
-3. You must also regenerate the *customer-service* and *product-service* client secrets and paste them into the *order-service.yml* configuration file instead of the default values ​​(this is located in the *hello-microservice-configuration* Git repository).
+2. You should recreate the *hello-microservice* Keycloak realm used in this project. Its structure is shown in the diagram below.
+However, the keycloak container is shared with its data volume, which will automatically restore the realm I used for testing.
+3. Using the **keycloak-providers** extension is optional. If you want to test that functionality, first build the module.
+Then run the gradle *shadowJar* task and finally, copy the *keycloak-providers-1.0.0-all.jar* file to
+the */containers/keycloak/volume/providers* directory before launching the */containers/keycloak/create-container.bat* script.
 
 ![](github-assets/keycloak-realm.png)
 
 ## Configuration
 
 The configuration files are stored in a local Git repository: [hello-microservice-configuration](https://github.com/michelmbem/hello-microservice-configuration).<br>
-The *config-server* module must be run before building any other module.<br>
+The *config-server* module must be run before building any other module, except *core-library*.<br>
 The build order is as follows:
 
-1. config-server (run it before continuing)
-2. discovery-server
-3. notification-service
-4. customer-service
-5. product-service
-6. order-service
-7. api-gateway
+1. core-library
+2. config-server (run it before continuing)
+3. discovery-server (should also be run before continuing)
+4. notification-service
+5. customer-service
+6. product-service
+7. order-service
+8. api-gateway
+9. keycloak-providers (not required to run other modules. Note that this module requires Java 17 unlike others)
