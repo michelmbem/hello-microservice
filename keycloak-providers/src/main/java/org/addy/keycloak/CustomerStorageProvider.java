@@ -1,7 +1,7 @@
 package org.addy.keycloak;
 
 import lombok.RequiredArgsConstructor;
-import org.addy.keycloak.adapter.CustomerUserAdapter;
+import org.addy.keycloak.adapter.CustomerAdapter;
 import org.addy.keycloak.model.Customer;
 import org.addy.keycloak.repository.CustomerRepository;
 import org.jboss.logging.Logger;
@@ -33,7 +33,7 @@ public class CustomerStorageProvider implements
         CredentialInputValidator,
         OnUserCache {
 
-    private static final String PASSWORD_CACHE_KEY = CustomerUserAdapter.class.getName() + ".password";
+    private static final String PASSWORD_CACHE_KEY = CustomerAdapter.class.getName() + ".password";
     private static final Logger log = Logger.getLogger(CustomerStorageProvider.class);
 
     private final KeycloakSession session;
@@ -126,17 +126,9 @@ public class CustomerStorageProvider implements
                                                  Integer firstResult, Integer maxResults) {
 
         log.info("Fetching all users in range " + firstResult + " to " + maxResults + " with params " + params);
-        Stream<Customer> allCustomers = repository.findAll().stream();
-
-        if (firstResult != null) {
-            allCustomers = allCustomers.skip(firstResult);
-        }
-
-        if (maxResults != null) {
-            allCustomers = allCustomers.limit(maxResults);
-        }
-
-        return allCustomers.map(customer -> mapUser(realm, customer));
+        return repository.findAll(params, firstResult, maxResults)
+                .stream()
+                .map(customer -> mapUser(realm, customer));
     }
 
     @Override
@@ -184,16 +176,16 @@ public class CustomerStorageProvider implements
     @SuppressWarnings("unchecked")
     public void onCache(RealmModel realm, CachedUserModel cachedUser, UserModel user) {
         log.info("Caching user " + user.getId());
-        String password = ((CustomerUserAdapter) user).getPassword();
+        String password = ((CustomerAdapter) user).getPassword();
         if (password != null) {
             cachedUser.getCachedWith().put(PASSWORD_CACHE_KEY, password);
         }
     }
 
-    private static CustomerUserAdapter extractCustomerModel(UserModel user) {
+    private static CustomerAdapter extractCustomerModel(UserModel user) {
         return user instanceof CachedUserModel cachedUserModel
-                ? (CustomerUserAdapter) cachedUserModel.getDelegateForUpdate()
-                : (CustomerUserAdapter) user;
+                ? (CustomerAdapter) cachedUserModel.getDelegateForUpdate()
+                : (CustomerAdapter) user;
     }
 
     private static String extractPassword(UserModel user) {
@@ -201,7 +193,7 @@ public class CustomerStorageProvider implements
 
         if (user instanceof CachedUserModel cachedUserModel) {
             password = (String) cachedUserModel.getCachedWith().get(PASSWORD_CACHE_KEY);
-        } else if (user instanceof CustomerUserAdapter customerModel) {
+        } else if (user instanceof CustomerAdapter customerModel) {
             password = customerModel.getPassword();
         }
 
@@ -209,6 +201,6 @@ public class CustomerStorageProvider implements
     }
 
     private UserModel mapUser(RealmModel realm, Customer customer) {
-        return new CustomerUserAdapter(session, realm, model, customer, repository);
+        return new CustomerAdapter(session, realm, model, customer, repository);
     }
 }

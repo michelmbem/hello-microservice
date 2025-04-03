@@ -2,7 +2,7 @@
 POST http://localhost:8181/realms/hello-microservice/protocol/openid-connect/token
 Content-Type: application/x-www-form-urlencoded
 
-grant_type=password&client_id=order-service&username=mike&password=mike.1
+grant_type=password&client_id=order-service&username=maeva.hiol@addy.org&password=a1m3h1&scope=profile%20phone%20address
 
 > {%
     client.test("Access token obtained from authorization server", () => {

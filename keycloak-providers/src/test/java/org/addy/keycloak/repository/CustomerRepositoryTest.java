@@ -35,7 +35,7 @@ class CustomerRepositoryTest {
 
     @Test
     void canFetchAllCustomers() {
-        List<Customer> customers = repository.findAll();
+        List<Customer> customers = repository.findAll(null, null, null);
         assertThat(customers).isNotEmpty();
     }
 
@@ -48,15 +48,16 @@ class CustomerRepositoryTest {
 
     //@Test
     void enableAllCustomers() {
-        repository.findAll().forEach(customer -> {
-            customer.setActive(true);
-            if (customer.getCreatedAt() == null) {
-                customer.setCreatedAt(System.currentTimeMillis());
-            }
-            repository.update(customer.getId(), customer);
-        });
+        repository.findAll(null, null, null)
+                .forEach(customer -> {
+                    customer.setActive(true);
+                    if (customer.getCreatedAt() == null) {
+                        customer.setCreatedAt(System.currentTimeMillis());
+                    }
+                    repository.update(customer.getId(), customer);
+                });
 
-        assertThat(repository.findAll())
+        assertThat(repository.findAll(null, null, null))
                 .isNotEmpty()
                 .allSatisfy(customer -> assertThat(customer.isActive()).isTrue());
     }

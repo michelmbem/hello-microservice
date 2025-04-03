@@ -1,9 +1,8 @@
 package org.addy.keycloak.model;
 
 import lombok.*;
+import org.addy.keycloak.util.Documents;
 import org.bson.Document;
-
-import java.util.Objects;
 
 @Data
 @NoArgsConstructor
@@ -34,8 +33,8 @@ public class Customer {
                 .city(document.getString("city"))
                 .state(document.getString("state"))
                 .postalCode(document.getString("postal_code"))
-                .createdAt(getLong(document, "created_at"))
-                .active(getBoolean(document,"active"))
+                .createdAt(Documents.getLong(document, "created_at"))
+                .active(Documents.getBoolean(document,"active", false))
                 .build();
     }
 
@@ -52,17 +51,5 @@ public class Customer {
                 .append("created_at", createdAt)
                 .append("active", active)
                 .append("_class", getClass().getName());
-    }
-
-    private static Long getLong(Document document, String field) {
-        try {
-            return document.getLong(field);
-        } catch (ClassCastException e) {
-            return document.getDouble(field).longValue();
-        }
-    }
-
-    private static boolean getBoolean(Document document, String field) {
-        return Objects.requireNonNullElse(document.getBoolean(field), false);
     }
 }

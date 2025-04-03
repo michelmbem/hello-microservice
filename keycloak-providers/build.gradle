@@ -25,6 +25,8 @@ repositories {
 
 ext {
     set('keycloakVersion', "26.1.4")
+    set('keycloakProvidersDir', "${System.properties['user.home']}/Projets/Docker/keycloak/volume/providers/")
+    // set('keycloakProvidersDir', "${rootProject.projectDir}/containers/keycloak/volume/providers/")
 }
 
 dependencies {
@@ -42,4 +44,16 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+shadowJar {
+    doLast {
+        copy {
+            from(layout.buildDirectory.dir('libs')) {
+                include '*-all.jar'
+            }
+
+            into("${keycloakProvidersDir}")
+        }
+    }
 }
