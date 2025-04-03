@@ -83,6 +83,7 @@ public class CustomerService {
         original.setCity(given.getCity());
         original.setState(given.getState());
         original.setPostalCode(given.getPostalCode());
+        original.setActive(given.isActive());
         original.setPaymentMethods(given.getPaymentMethods());
     }
 }
