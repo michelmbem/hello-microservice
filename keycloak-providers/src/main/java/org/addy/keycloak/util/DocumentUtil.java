@@ -6,7 +6,7 @@ import org.bson.Document;
 import java.util.Objects;
 
 @UtilityClass
-public class Documents {
+public class DocumentUtil {
 
     public Long getLong(Document document, String field) {
         try {

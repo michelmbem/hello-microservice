@@ -1,6 +1,7 @@
-package org.addy.orderservice.configuration.feignclient;
+package org.addy.security.configuration;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.client.AuthorizedClientServiceOAuth2AuthorizedClientManager;
@@ -11,6 +12,7 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 
 @RequiredArgsConstructor
 @Configuration
+@ConditionalOnBean(OAuth2AuthorizedClientService.class)
 public class FeignClientsConfig {
     private final OAuth2AuthorizedClientService authorizedClientService;
     private final ClientRegistrationRepository clientRegistrationRepository;

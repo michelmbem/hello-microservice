@@ -1,6 +1,6 @@
 package org.addy.orderservice.configuration;
 
-import org.addy.orderservice.security.KeycloakAuthenticationConverter;
+import org.addy.security.converter.KeycloakAuthenticationConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

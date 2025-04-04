@@ -17,8 +17,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static org.addy.keycloak.util.Collections.*;
-
 public class CustomerAdapter extends AbstractUserAdapterFederatedStorage {
     public static final String PHONE_NUMBER = "phoneNumber";
     public static final String ADDRESS = "address";
@@ -39,7 +37,7 @@ public class CustomerAdapter extends AbstractUserAdapterFederatedStorage {
         this.customer = customer;
         this.repository = repository;
         keycloakId = StorageId.keycloakId(model, customer.getId());
-        log.info("CustomerUserAdapter created, keycloakId: " + keycloakId);
+        log.info("CustomerAdapter created, keycloakId: " + keycloakId + ", customer: " + this.customer);
     }
 
     public String getPassword() {
@@ -147,29 +145,42 @@ public class CustomerAdapter extends AbstractUserAdapterFederatedStorage {
             case EMAIL -> setEmail(value);
             case FIRST_NAME -> setFirstName(value);
             case LAST_NAME -> setLastName(value);
-            case PHONE_NUMBER -> customer.setPhoneNumber(value);
-            case ADDRESS -> customer.setAddress(value);
-            case CITY -> customer.setCity(value);
-            case STATE -> customer.setState(value);
-            case POSTAL_CODE -> customer.setPostalCode(value);
+            case PHONE_NUMBER -> {
+                customer.setPhoneNumber(value);
+                updateCustomer();
+            }
+            case ADDRESS -> {
+                customer.setAddress(value);
+                updateCustomer();
+            }
+            case CITY -> {
+                customer.setCity(value);
+                updateCustomer();
+            }
+            case STATE -> {
+                customer.setState(value);
+                updateCustomer();
+            }
+            case POSTAL_CODE -> {
+                customer.setPostalCode(value);
+                updateCustomer();
+            }
             default -> log.warn("Unsupported attribute: " + name);
         }
-
-        updateCustomer();
     }
 
     @Override
     public Map<String, List<String>> getAttributes() {
         var attributes = new MultivaluedHashMap<String, String>();
         attributes.putAll(super.getAttributes());
-        attributes.put(EMAIL, listOf(getEmail()));
-        attributes.put(FIRST_NAME, listOf(getFirstName()));
-        attributes.put(LAST_NAME, listOf(getLastName()));
-        attributes.put(PHONE_NUMBER, listOf(customer.getPhoneNumber()));
-        attributes.put(ADDRESS, listOf(customer.getAddress()));
-        attributes.put(CITY, listOf(customer.getCity()));
-        attributes.put(STATE, listOf(customer.getState()));
-        attributes.put(POSTAL_CODE, listOf(customer.getPostalCode()));
+        attributes.put(EMAIL, Stream.ofNullable(getEmail()).toList());
+        attributes.put(FIRST_NAME, Stream.ofNullable(getFirstName()).toList());
+        attributes.put(LAST_NAME, Stream.ofNullable(getLastName()).toList());
+        attributes.put(PHONE_NUMBER, Stream.ofNullable(customer.getPhoneNumber()).toList());
+        attributes.put(ADDRESS, Stream.ofNullable(customer.getAddress()).toList());
+        attributes.put(CITY, Stream.ofNullable(customer.getCity()).toList());
+        attributes.put(STATE, Stream.ofNullable(customer.getState()).toList());
+        attributes.put(POSTAL_CODE, Stream.ofNullable(customer.getPostalCode()).toList());
 
         return attributes;
     }

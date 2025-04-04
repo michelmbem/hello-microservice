@@ -142,7 +142,7 @@ public class CustomerStorageProvider implements
     @Override
     public Stream<UserModel> searchForUserByUserAttributeStream(RealmModel realm, String name, String value) {
         log.info("Fetching users for which " + name + " is " + value);
-        return Stream.empty();
+        return searchForUserStream(realm, Map.of(name, value), null, null);
     }
 
     @Override

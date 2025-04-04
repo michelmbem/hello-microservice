@@ -95,29 +95,24 @@ public class CustomerRepository {
 
     private static Bson translateQuery(Map<String, String> query) {
         List<Bson> predicates;
+        String search = query.get(SEARCH_KEY);
 
-        if (query.containsKey(SEARCH_KEY)) {
-            final String search = query.get(SEARCH_KEY);
-
-            if (search == null || search.isBlank() || "*".equals(search)) {
-                return null;
-            }
-
-            predicates = Stream.of("email", "name")
-                    .map(field -> regex(field, search, "i"))
-                    .toList();
-        } else {
-            final Set<String> queryableFields = Set.of("username", "email", "firstName", "lastName");
-            final boolean exact = "true".equals(query.get(EXACT_KEY));
+        if (search == null || search.isBlank() || "*".equals(search.strip())) {
+            Set<String> queryableAttributes = Set.of("username", "email", "firstName", "lastName");
+            boolean exact = "true".equals(query.get(EXACT_KEY));
 
             predicates = query.entrySet()
                     .stream()
-                    .filter(entry -> queryableFields.contains(entry.getKey()))
+                    .filter(entry -> queryableAttributes.contains(entry.getKey()))
                     .map(entry -> buildPredicate(entry.getKey(), entry.getValue(), exact))
+                    .toList();
+        } else {
+            predicates = Stream.of("email", "name")
+                    .map(field -> regex(field, search, "i"))
                     .toList();
         }
 
-        return or(predicates);
+        return predicates.isEmpty() ? null : or(predicates);
     }
 
     private static Bson buildPredicate(String attribute, String value, boolean exact) {
@@ -125,10 +120,13 @@ public class CustomerRepository {
             case "username", "email" -> exact
                     ? eq("email", value)
                     : regex("email", value, "i");
-            case "firstName" -> regex("name", "^" + value, "i");
-            case "lastName" -> regex("name", value + "$", "i");
+            case "firstName" -> exact
+                    ? regex("name", "^" + value, "i")
+                    : regex("name", value, "i"); // May also match the last name
+            case "lastName" -> exact
+                    ? regex("name", value + "$", "i")
+                    : regex("name", value, "i"); // May also match the first name
             default -> null;
         };
     }
-
 }

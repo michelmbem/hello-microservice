@@ -35,7 +35,8 @@ springBoot {
 }
 
 dependencies {
-    implementation project(':core-library')
+    implementation project(':libraries:core-library')
+    implementation project(':libraries:security-library')
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'

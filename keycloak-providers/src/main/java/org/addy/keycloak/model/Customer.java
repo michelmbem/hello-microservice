@@ -1,7 +1,7 @@
 package org.addy.keycloak.model;
 
 import lombok.*;
-import org.addy.keycloak.util.Documents;
+import org.addy.keycloak.util.DocumentUtil;
 import org.bson.Document;
 
 @Data
@@ -13,6 +13,7 @@ public class Customer {
     private String id;
     private String name;
     private String email;
+    @ToString.Exclude
     private String password;
     private String phoneNumber;
     private String address;
@@ -33,8 +34,8 @@ public class Customer {
                 .city(document.getString("city"))
                 .state(document.getString("state"))
                 .postalCode(document.getString("postal_code"))
-                .createdAt(Documents.getLong(document, "created_at"))
-                .active(Documents.getBoolean(document,"active", false))
+                .createdAt(DocumentUtil.getLong(document, "created_at"))
+                .active(DocumentUtil.getBoolean(document,"active", false))
                 .build();
     }
 

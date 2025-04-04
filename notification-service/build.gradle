@@ -25,7 +25,7 @@ ext {
 }
 
 dependencies {
-    implementation project(':core-library')
+    implementation project(':libraries:core-library')
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.cloud:spring-cloud-starter-config'

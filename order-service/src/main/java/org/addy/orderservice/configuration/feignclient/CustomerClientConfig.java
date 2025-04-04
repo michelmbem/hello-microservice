@@ -2,7 +2,7 @@ package org.addy.orderservice.configuration.feignclient;
 
 import feign.RequestInterceptor;
 import lombok.RequiredArgsConstructor;
-import org.addy.orderservice.security.OAuthClientCredentialsFeignManager;
+import org.addy.security.OAuthClientCredentialsFeignManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.client.*;
