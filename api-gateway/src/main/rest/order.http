@@ -84,8 +84,9 @@ Authorization: Bearer {{user_access_token}}
     },
     {
       "op": "UPDATE",
+      "id": "<paste-first-item-id-here>",
       "payload": {
-        "product_id": "{{api.order_service.product_ids[0]}}",
+        "product_id": "{{api.product_ids[0]}}",
         "unit_price": 10,
         "discount": 0.05,
         "quantity": 1
@@ -93,9 +94,7 @@ Authorization: Bearer {{user_access_token}}
     },
     {
       "op": "REMOVE",
-      "payload": {
-        "product_id": "{{api.order_service.product_ids[1]}}"
-      }
+      "id": "<paste-second-item-id-here>"
     }
   ]
 }

@@ -2,6 +2,7 @@ package org.addy.orderservice.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import org.addy.orderservice.enumeration.OrderStatus;
@@ -30,6 +31,7 @@ public class Order {
     @Column(name = "created_on", insertable = false, updatable = false)
     private LocalDateTime createdOn;
 
+    @FutureOrPresent
     @Column(name = "delivery_date", nullable = false)
     private LocalDateTime deliveryDate;
 
