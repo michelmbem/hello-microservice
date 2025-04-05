@@ -11,7 +11,6 @@ import org.hibernate.annotations.JdbcType;
 import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,6 +22,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "`order`")
 public class Order {
+
     @Id
     private UUID id;
 

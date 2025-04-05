@@ -1,6 +1,8 @@
 package org.addy.orderservice.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
@@ -30,7 +32,8 @@ public class OrderItem {
     @Positive
     private short quantity;
 
-    @PositiveOrZero
+    @DecimalMin("0.0")
+    @DecimalMax("1.0")
     private float discount;
 
     @Positive

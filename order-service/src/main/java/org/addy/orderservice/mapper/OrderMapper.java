@@ -7,9 +7,7 @@ import org.mapstruct.*;
 
 import static org.mapstruct.ReportingPolicy.IGNORE;
 
-@Mapper(componentModel = "spring",
-        unmappedTargetPolicy = IGNORE,
-        uses = OrderItemMapper.class)
+@Mapper(componentModel = "spring", unmappedTargetPolicy = IGNORE, uses = OrderItemMapper.class)
 @DecoratedWith(OrderMapperDecorator.class)
 public interface OrderMapper {
 

@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import org.addy.customerservice.converter.LocalDateTimeConverter;
+import org.addy.validation.Patterns;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.convert.ValueConverter;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -30,11 +32,11 @@ public class Customer {
     @JsonProperty(access = READ_ONLY)
     private String id;
 
-    @NotNull
+    @NotEmpty
     @Indexed(unique = true)
     private String name;
 
-    @NotNull
+    @NotEmpty
     @Email
     @Indexed(unique = true)
     private String email;
@@ -42,6 +44,7 @@ public class Customer {
     @JsonIgnore
     private String password;
 
+    @Pattern(regexp = Patterns.PHONE_NUMBER)
     @Field("phone_number")
     @JsonProperty("phone_number")
     private String phoneNumber;
@@ -67,4 +70,16 @@ public class Customer {
     @Field("payment_methods")
     @JsonProperty("payment_methods")
     private List<PaymentMethod> paymentMethods;
+
+    public void copyTo(Customer target) {
+        target.setName(name);
+        target.setEmail(email);
+        target.setPhoneNumber(phoneNumber);
+        target.setAddress(address);
+        target.setCity(city);
+        target.setState(state);
+        target.setPostalCode(postalCode);
+        target.setActive(active);
+        target.setPaymentMethods(paymentMethods);
+    }
 }

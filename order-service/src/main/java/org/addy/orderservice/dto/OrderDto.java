@@ -26,7 +26,7 @@ public class OrderDto {
 
     private UUID id;
 
-    @JsonProperty("created_on")
+    @JsonProperty(value = "created_on", access = READ_ONLY)
     private LocalDateTime createdOn;
 
     @NotNull
@@ -50,14 +50,12 @@ public class OrderDto {
 
     @JsonProperty("total_price")
     public BigDecimal getTotalPrice() {
-        BigDecimal totalPrice = BigDecimal.ZERO;
-
         if (items != null) {
-            for (OrderItemDto item : items) {
-                totalPrice = totalPrice.add(item.getTotalPrice());
-            }
+            return items.stream()
+                    .map(OrderItemDto::getTotalPrice)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
         }
 
-        return totalPrice;
+        return BigDecimal.ZERO;
     }
 }

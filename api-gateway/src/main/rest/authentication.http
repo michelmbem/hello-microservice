@@ -1,31 +1,54 @@
 ### Authenticate with username and password
-POST http://localhost:8181/realms/hello-microservice/protocol/openid-connect/token
+POST {{auth.host}}/{{auth.realm_path}}/{{auth.token_path}}
 Content-Type: application/x-www-form-urlencoded
 
-grant_type=password&client_id=order-service&username=danny&password=danny.1
+client_id=order-service
+    &grant_type={{api.order_service.grant_type}}
+    &username={{api.order_service.username}}
+    &password={{api.order_service.password}}
+    &scope={{api.order_service.scopes}}
 
 > {%
     client.test("Access token obtained from authorization server", () => {
         client.assert(response.status === 200, "Authentication failed");
-        client.assert(!!response.body.access_token, "Access token is undefined");
+        client.assert(response.body.access_token, "Access token is undefined");
     });
 
     client.global.set('user_access_token', response.body.access_token);
 %}
 
-### Authenticate with client_id and client_secret
-POST http://localhost:8181/realms/hello-microservice/protocol/openid-connect/token
+### Authenticate to customer-service
+POST {{auth.host}}/{{auth.realm_path}}/{{auth.token_path}}
 Content-Type: application/x-www-form-urlencoded
 
-grant_type=client_credentials&client_id=customer-service&client_secret=oISF6rNs9vVVMxSD0VCfdJ9ZJw7v478K
+client_id=customer-service
+    &grant_type={{api.customer_service.grant_type}}
+    &client_secret={{api.customer_service.secret}}
 
 > {%
     client.test("Access token obtained from authorization server", () => {
         client.assert(response.status === 200, "Authentication failed");
-        client.assert(!!response.body.access_token, "Access token is undefined");
+        client.assert(response.body.access_token, "Access token is undefined");
     });
 
-    client.global.set('client_access_token', response.body.access_token);
+    client.global.set('customer_service_access_token', response.body.access_token);
+%}
+
+### Authenticate to product-service
+POST {{auth.host}}/{{auth.realm_path}}/{{auth.token_path}}
+Content-Type: application/x-www-form-urlencoded
+
+client_id=product-service
+    &grant_type={{api.product_service.grant_type}}
+    &client_secret={{api.product_service.secret}}
+
+> {%
+    client.test("Access token obtained from authorization server", () => {
+        client.assert(response.status === 200, "Authentication failed");
+        client.assert(response.body.access_token, "Access token is undefined");
+    });
+
+    client.global.set('product_service_access_token', response.body.access_token);
 %}
 
 ###

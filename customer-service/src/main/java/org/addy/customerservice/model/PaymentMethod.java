@@ -1,8 +1,10 @@
 package org.addy.customerservice.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.addy.customerservice.enumeration.PaymentMethodType;
 
 import java.util.UUID;
 
@@ -21,6 +23,6 @@ public class PaymentMethod {
     @NotNull
     private PaymentMethodType type;
 
-    @NotNull
+    @NotEmpty
     private String number;
 }

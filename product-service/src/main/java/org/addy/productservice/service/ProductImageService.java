@@ -9,7 +9,10 @@ import org.addy.productservice.repository.ProductImageRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -36,7 +39,7 @@ public class ProductImageService {
     }
 
     public ProductImageDto persist(ProductImageDto imageDto) {
-        checkUniquenessOfDefault(imageDto);
+        checkUniquenessOfDefault(null, imageDto);
 
         ProductImage image = productImageMapper.map(imageDto);
         image = productImageRepository.save(image);
@@ -45,7 +48,7 @@ public class ProductImageService {
     }
 
     public void update(UUID id, ProductImageDto imageDto) {
-        checkUniquenessOfDefault(imageDto);
+        checkUniquenessOfDefault(id, imageDto);
 
         productImageRepository.findById(id).ifPresentOrElse(
                 image -> {
@@ -65,11 +68,11 @@ public class ProductImageService {
                 });
     }
 
-    private void checkUniquenessOfDefault(ProductImageDto imageDto) {
+    private void checkUniquenessOfDefault(UUID id, ProductImageDto imageDto) {
         if (!imageDto.isDefault()) return;
 
         productImageRepository.findProductDefault(imageDto.getProduct().getId())
-                .filter(image -> !Objects.equals(image.getId(), imageDto.getId()))
+                .filter(image -> !image.getId().equals(id))
                 .ifPresent(image -> {
                     throw new IllegalArgumentException("There is already a default image for product with id '" +
                             imageDto.getProduct().getId() + "'");

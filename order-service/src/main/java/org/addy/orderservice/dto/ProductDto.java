@@ -1,7 +1,9 @@
 package org.addy.orderservice.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -16,13 +18,15 @@ public class ProductDto {
 
     private UUID id;
 
-    @NotNull
+    @NotEmpty
     private String name;
 
     @NotNull
+    @PositiveOrZero
     @JsonProperty("unit_price")
     private BigDecimal unitPrice;
 
+    @PositiveOrZero
     @JsonProperty("discounted_price")
     private BigDecimal discountedPrice;
 }

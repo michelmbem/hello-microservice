@@ -1,97 +1,72 @@
 ### Create a new order
-POST http://localhost:8080/orders
+POST {{api.host}}/orders
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{user_access_token}}
 
 {
-  "delivery_date": "2025-04-01T11:00",
-  "customer": "67eda2c96734684cd21bd2d8",
+  "delivery_date": "<YYYY-MM-DDThh:mm>",
+  "customer": "{{api.order_service.customer_id}}",
   "items": [
     {
-      "product": "2e93e208-26f0-46bd-a78d-1595a9c1a3b4",
+      "product": "{{api.order_service.product_ids[0]}}",
       "quantity": 2,
-      "unit_price": 1800,
-      "discount": 0
+      "unit_price": 10,
+      "discount": 0.05
     },
     {
-      "product": "779d1295-f968-442e-86e7-e3087c89e1ed",
-      "quantity": 2,
-      "unit_price": 1300,
-      "discount": 0
+      "product": "{{api.order_service.product_ids[1]}}",
+      "quantity": 1,
+      "unit_price": 15,
+      "discount": 0.05
     }
   ]
 }
 
 ### Get a list of all orders
-GET http://localhost:8080/orders
+GET {{api.host}}/orders
 Content-Type: application/json
 Accept: application/json
 
 ### Get an order by id
-GET http://localhost:8080/orders/f6c4d27e-fc00-4bb3-b938-a29504b444ec
+GET {{api.host}}/orders/{{api.order_service.order_id}}
 Content-Type: application/json
 Accept: application/json
 
 ### Get an order by customer
-GET http://localhost:8080/orders/by-customer/67d354e09c577d16ffd556e0
+GET {{api.host}}/orders/by-customer/{{api.order_service.customer_id}}
 Content-Type: application/json
 Accept: application/json
 
 ### Update an order
-PUT http://localhost:8080/orders/c71f225f-e71b-4575-8369-4c0d45390899
+PUT {{api.host}}/orders/{{api.order_service.order_id}}
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{user_access_token}}
 
 {
-  "customer": {
-    "id": "67e5f82aef6fdc192f720dc3"
-  },
+  "delivery_date": "<YYYY-MM-DDThh:mm>",
+  "customer": "{{api.order_service.customer_id}}",
   "items": [
     {
-      "id": "9593f62e-fb48-4a45-aad7-f03be1d3e75f",
-      "product": {
-        "id": "3370d3b1-51c3-4f43-a635-6540770ac737"
-      },
-      "quantity": 1,
-      "discount": 0.0,
-      "unit_price": 1500
-    },
-    {
-      "id": "18b45174-89ca-42b1-9a26-59d9a95f75cf",
-      "product": {
-        "id": "cf4f81ca-7b81-4fa7-a0f7-2c42d006eac7"
-      },
+      "id": "<paste-generated-item-id-here>",
+      "product": "{{api.order_service.product_ids[0]}}",
       "quantity": 2,
-      "discount": 0.0,
-      "unit_price": 1300
+      "unit_price": 10,
+      "discount": 0.05
     },
     {
-      "product": {
-        "id": "6041a1b0-4f11-41e5-8a35-aba4f8bb460c"
-      },
-      "quantity": 1,
-      "discount": 0.7,
-      "unit_price": 1700
-    },
-    {
-      "product": {
-        "id": "c2bcb68d-a33d-4c11-a1de-f0f9f3fe5a7c"
-      },
-      "quantity": 6,
-      "discount": 0.2,
-      "unit_price": 400
+      "id": "<paste-generated-item-id-here>",
+      "product": "{{api.order_service.product_ids[1]}}",
+      "quantity": 2,
+      "unit_price": 15,
+      "discount": 0.05
     }
-  ],
-  "delivery_date": "2025-03-29T18:00:00",
-  "payment_method": {
-    "id": "bd8511ac-797b-42f6-9166-3549783a224e"
-  }
+  ]
 }
 
 ### Patch an order
-PATCH http://localhost:8080/orders/f6c4d27e-fc00-4bb3-b938-a29504b444ec
+PATCH {{api.host}}/orders/{{api.order_service.order_id}}
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{user_access_token}}
@@ -101,17 +76,32 @@ Authorization: Bearer {{user_access_token}}
     {
       "op": "ADD",
       "payload": {
-        "product_id": "b502ac59-68f7-4bee-8302-93b764464632",
-        "unit_price": 300,
-        "discount": 0,
+        "product_id": "{{api.order_service.product_ids[2]}}",
+        "unit_price": 5,
+        "discount": 0.05,
         "quantity": 2
+      }
+    },
+    {
+      "op": "UPDATE",
+      "payload": {
+        "product_id": "{{api.order_service.product_ids[0]}}",
+        "unit_price": 10,
+        "discount": 0.05,
+        "quantity": 1
+      }
+    },
+    {
+      "op": "REMOVE",
+      "payload": {
+        "product_id": "{{api.order_service.product_ids[1]}}"
       }
     }
   ]
 }
 
 ### Delete an order
-DELETE http://localhost:8080/orders/53be75da-d7a1-42f4-a4e0-5bb6b7ee8219
+DELETE {{api.host}}/orders/{{api.order_service.order_id}}
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{user_access_token}}

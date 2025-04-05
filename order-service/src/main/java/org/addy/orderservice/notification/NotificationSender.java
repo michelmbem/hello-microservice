@@ -2,7 +2,7 @@ package org.addy.orderservice.notification;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.addy.messaging.Notification;
+import org.addy.model.messaging.Notification;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;

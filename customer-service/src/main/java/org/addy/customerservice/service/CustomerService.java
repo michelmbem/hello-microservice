@@ -48,7 +48,7 @@ public class CustomerService {
     public void update(String id, Customer customer) {
         customerRepository.findById(id).ifPresentOrElse(
                 original -> {
-                    copyAttributes(customer, original);
+                    customer.copyTo(original);
                     customerRepository.save(original);
                 },
                 () -> {
@@ -73,17 +73,5 @@ public class CustomerService {
                 () -> {
                     throw new NoSuchElementException("Customer with id '" + id + "' not found");
                 });
-    }
-
-    private static void copyAttributes(Customer given, Customer original) {
-        original.setName(given.getName());
-        original.setEmail(given.getEmail());
-        original.setPhoneNumber(given.getPhoneNumber());
-        original.setAddress(given.getAddress());
-        original.setCity(given.getCity());
-        original.setState(given.getState());
-        original.setPostalCode(given.getPostalCode());
-        original.setActive(given.isActive());
-        original.setPaymentMethods(given.getPaymentMethods());
     }
 }

@@ -1,113 +1,110 @@
 ### Create a new customer
-POST http://localhost:8080/customers
+POST {{api.host}}/customers
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer {{client_access_token}}
+Authorization: Bearer {{customer_service_access_token}}
 
 {
-  "name": "Maeva Hiol",
-  "email": "maeva.hiol@addy.org",
-  "password": "a1m3h1",
-  "phone_number": "6 97 00 70 69",
-  "address": "Efoulan",
-  "city": "Yaoundé",
-  "state": "CM",
-  "postal_code": "00237",
+  "name": "John Doe",
+  "email": "john.doe@somecompany.com",
+  "phone_number": "+1 (234) 567-8900",
+  "address": "123 Joyful Street",
+  "city": "Ottawa",
+  "state": "ON",
+  "postal_code": "A1B 2C3",
   "active": true,
   "payment_methods": [
     {
       "type": "PAYPAL",
-      "number": "maeva.hiol@addy.org"
+      "number": "john.doe@somecompany.com"
     }
   ]
 }
 
 ### Get a list of all customers
-GET http://localhost:8080/customers
+GET {{api.host}}/customers
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer {{client_access_token}}
+Authorization: Bearer {{customer_service_access_token}}
 
 ### Get a list of customers by name part
-GET http://localhost:8080/customers/by-name-part/ar
+GET {{api.host}}/customers/by-name-part/{{api.customer_service.customer_name_frag}}
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer {{client_access_token}}
+Authorization: Bearer {{customer_service_access_token}}
 
 ### Get a customer by id
-GET http://localhost:8080/customers/67e5f82aef6fdc192f720dc3
+GET {{api.host}}/customers/{{api.customer_service.customer_id}}
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer {{client_access_token}}
+Authorization: Bearer {{customer_service_access_token}}
 
 ### Get a customer by name
-GET http://localhost:8080/customers/by-name/Jane%20Doe
+GET {{api.host}}/customers/by-name/{{api.customer_service.customer_name}}
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer {{client_access_token}}
+Authorization: Bearer {{customer_service_access_token}}
 
-### Get a customer by name
-GET http://localhost:8080/customers/by-email/jane.doe@dummy.xyz
+### Get a customer by email
+GET {{api.host}}/customers/by-email/{{api.customer_service.customer_email}}
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer {{client_access_token}}
+Authorization: Bearer {{customer_service_access_token}}
 
-### Get a customer by name
-GET http://localhost:8080/customers/by-phone-number/(789)%20456-1230
+### Get a customer by phone number
+GET {{api.host}}/customers/by-phone-number/{{api.customer_service.customer_phone}}
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer {{client_access_token}}
+Authorization: Bearer {{customer_service_access_token}}
 
 ### Update a customer
-PUT http://localhost:8080/customers/67d66b4efa38ba6ba572dac6
+PUT {{api.host}}/customers/{{api.customer_service.customer_id}}
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer {{client_access_token}}
+Authorization: Bearer {{customer_service_access_token}}
 
 {
-  "name": "Ethan Smith",
-  "email": "ethan.smith@dummy.xyz",
-  "password": "wxyzabcd",
-  "phone_number": "(567) 432-7890",
-  "address": "1234 Sunny Bd",
-  "city": "Edmonton",
-  "state": "AL",
-  "postal_code": "V6B 3E4",
+  "name": "Jon Dave",
+  "email": "jon.dave@othercompany.org",
+  "phone_number": "+1 (234) 567-8900",
+  "address": "987 Avenue-du-bonheur",
+  "city": "Montreal",
+  "state": "QC",
+  "postal_code": "Z9Y 8X7",
+  "active": true,
   "payment_methods": [
     {
-      "type": "DEBIT_CARD",
-      "number": "5436-9870-5786-2431"
-    },
-    {
+      "id": "<put-payment-method-id-here>",
       "type": "PAYPAL",
-      "number": "ethan.smith@dummy.xyz"
+      "number": "jon.dave@othercompany.org"
     }
   ]
 }
 
 ### Patch a customer
-PATCH http://localhost:8080/customers/67d855f4b5115e4ee1980ab8
+PATCH {{api.host}}/customers/{{api.customer_service.customer_id}}
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer {{client_access_token}}
+Authorization: Bearer {{customer_service_access_token}}
 
 {
-  "name": "Markus Donahue Zunega Clark",
+  "name": "Jonathan Davids",
+  "email": "jon.davids@othercompany.org",
   "payment_methods": [
     {
       "op": "UPDATE",
-      "id": "73ede2e5-778b-46d0-881a-a5dc23e5edb8",
+      "id": "<put-payment-method-id-here>",
       "payload": {
-        "number": "mdzunega@donuts.org"
+        "number": "jon.davids@othercompany.org"
       }
     }
   ]
 }
 
 ### Delete a customer
-DELETE http://localhost:8080/customers/67d3561fcd1d3c4402ac6d12
+DELETE {{api.host}}/customers/{{api.customer_service.customer_id}}
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer {{client_access_token}}
+Authorization: Bearer {{customer_service_access_token}}
 
 ###

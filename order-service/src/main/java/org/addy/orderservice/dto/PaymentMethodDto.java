@@ -1,6 +1,7 @@
 package org.addy.orderservice.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.addy.orderservice.enumeration.PaymentMethodType;
@@ -15,13 +16,12 @@ import java.util.UUID;
 @EqualsAndHashCode(of = "id")
 public class PaymentMethodDto {
 
-    @NotNull
     private UUID id;
 
     @NotNull
     private PaymentMethodType type;
 
-    @NotNull
+    @NotEmpty
     private String number;
 
     @JsonIgnore

@@ -17,11 +17,11 @@ import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
-import static org.addy.orderservice.util.Constants.*;
+import static org.addy.orderservice.util.Constants.UNKNOWN_ATTRIBUTE_VALUE;
 
 public abstract class OrderMapperDecorator implements OrderMapper {
 
@@ -41,13 +41,14 @@ public abstract class OrderMapperDecorator implements OrderMapper {
 
         customerService.findById(order.getCustomerId()).ifPresentOrElse(
                 customerDto  -> {
+                    orderDto.setCustomer(customerDto);
+
                     Stream<PaymentMethodDto> paymentMethodDtoStream = customerDto.getPaymentMethods() != null
                             ? customerDto.getPaymentMethods().stream()
                             : Stream.empty();
 
-                    orderDto.setCustomer(customerDto);
                     orderDto.setPaymentMethod(paymentMethodDtoStream
-                            .filter(pm -> Objects.equals(pm.getId(), order.getPaymentMethodId()))
+                            .filter(pm -> pm.getId().equals(order.getPaymentMethodId()))
                             .findFirst()
                             .orElse(unknownPaymentMethod(order.getPaymentMethodId())));
                 },
@@ -103,50 +104,36 @@ public abstract class OrderMapperDecorator implements OrderMapper {
     }
 
     private void syncItems(OrderDto orderDto, Order order) {
-        List<OrderItemDto> givenItems = orderDto.getItems();
+        if (order.getItems() == null) {
+            order.setItems(new ArrayList<>());
+        }
+
+        List<OrderItemDto> givenItems = orderDto.getItems() != null ? orderDto.getItems() : List.of();
         List<OrderItem> originalItems = order.getItems();
         List<OrderItem> addedItems = new ArrayList<>();
-        List<OrderItem> deletedItems = new ArrayList<>();
 
-        if (givenItems == null) {
-            givenItems = List.of();
-            orderDto.setItems(givenItems);
-        }
+        givenItems.forEach(givenItem -> originalItems.stream()
+                .filter(originalItem -> originalItem.getId().equals(givenItem.getId()))
+                .findFirst()
+                .ifPresentOrElse(
+                        originalItem -> itemMapper.map(givenItem, originalItem),
+                        () -> {
+                            OrderItem newItem = itemMapper.map(givenItem);
+                            newItem.setOrder(order);
+                            addedItems.add(newItem);
+                        }
+                ));
 
-        if (originalItems == null) {
-            originalItems = new ArrayList<>();
-            order.setItems(originalItems);
-        }
-
-        for (OrderItemDto givenItem : givenItems) {
-            OrderItem originalItem = originalItems.stream()
-                    .filter(item -> Objects.equals(item.getId(), givenItem.getId()))
-                    .findFirst()
-                    .orElse(null);
-
-            if (originalItem != null) {
-                itemMapper.map(givenItem, originalItem);
-            } else {
-                OrderItem newItem = itemMapper.map(givenItem);
-                newItem.setOrder(order);
-                addedItems.add(newItem);
-            }
-        }
-
-        for (OrderItem originalItem : originalItems) {
-            if (givenItems.stream().noneMatch(givenItem ->
-                    Objects.equals(givenItem.getId(), originalItem.getId()))) {
-                originalItem.setOrder(null);
-                deletedItems.add(originalItem);
-            }
-        }
+        List<OrderItem> deletedItems = originalItems.stream()
+                .filter(originalItem -> givenItems.stream()
+                        .noneMatch(givenItem -> originalItem.getId().equals(givenItem.getId())))
+                .peek(originalItem -> originalItem.setOrder(null))
+                .toList();
 
         originalItems.removeAll(deletedItems);
         originalItems.addAll(addedItems);
 
-        short rank = 1;
-        for (OrderItem originalItem : originalItems) {
-            originalItem.setRank(rank++);
-        }
+        var rankGenerator = new AtomicInteger(1);
+        originalItems.forEach(item -> item.setRank((short) rankGenerator.incrementAndGet()));
     }
 }

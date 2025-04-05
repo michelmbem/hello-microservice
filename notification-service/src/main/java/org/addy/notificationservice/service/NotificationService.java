@@ -2,7 +2,7 @@ package org.addy.notificationservice.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.addy.messaging.Notification;
+import org.addy.model.messaging.Notification;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -32,7 +32,7 @@ public class NotificationService {
             String body = templateLoader.loadTemplate(template, model);
 
             mailSender.send(mimeMessage -> {
-                MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+                var message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
                 message.setFrom(from);
                 message.setTo(to);
                 message.setSubject(subject);

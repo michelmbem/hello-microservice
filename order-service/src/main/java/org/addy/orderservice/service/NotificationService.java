@@ -2,8 +2,10 @@ package org.addy.orderservice.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.addy.messaging.Notification;
+import org.addy.model.messaging.Notification;
+import org.addy.orderservice.dto.CustomerDto;
 import org.addy.orderservice.dto.OrderDto;
+import org.addy.orderservice.dto.OrderItemDto;
 import org.addy.orderservice.dto.PaymentMethodDto;
 import org.addy.orderservice.enumeration.PaymentMethodType;
 import org.addy.orderservice.notification.NotificationSender;
@@ -45,34 +47,26 @@ public class NotificationService {
         ));
     }
 
-    private Map<String, Object> getSubstitutions(OrderDto orderDto) {
+    private static Map<String, Object> getSubstitutions(OrderDto orderDto) {
         return Map.of(
                 "orderId", orderDto.getId(),
                 "orderDate", date2str(orderDto.getCreatedOn()),
                 "deliveryDate", date2str(orderDto.getDeliveryDate()),
-                "customer", Map.of(
-                        "name", orderDto.getCustomer().getName(),
-                        "address", emptyIfNull(orderDto.getCustomer().getAddress()),
-                        "city", emptyIfNull(orderDto.getCustomer().getCity()),
-                        "state", emptyIfNull(orderDto.getCustomer().getState()),
-                        "postalCode", emptyIfNull(orderDto.getCustomer().getPostalCode())),
+                "customer", customerAsMap(orderDto.getCustomer()),
                 "paymentMethod", paymentMethodAsMap(orderDto.getPaymentMethod()),
-                "items", orderDto.getItems().stream().map(item -> Map.of(
-                        "productName", item.getProduct().getName(),
-                        "quantity", item.getQuantity(),
-                        "price", item.getTotalPrice()))
-                        .toList(),
-                "totalPrice", orderDto.getTotalPrice());
+                "items", orderDto.getItems().stream().map(NotificationService::orderItemAsMap).toList(),
+                "totalPrice", orderDto.getTotalPrice()
+        );
     }
 
-    private static String date2str(LocalDateTime dateTime) {
-        return dateTime != null
-                ? dateTime.format(DateTimeFormatter.ofPattern("MMM d, yyyy 'at' HH:mm").localizedBy(Locale.ENGLISH))
-                : "";
-    }
-
-    private static String emptyIfNull(String str) {
-        return str != null ? str : "";
+    private static Map<String, Object> customerAsMap(CustomerDto customerDto) {
+        return Map.of(
+                "name", customerDto.getName(),
+                "address", String.valueOf(customerDto.getAddress()),
+                "city", String.valueOf(customerDto.getCity()),
+                "state", String.valueOf(customerDto.getState()),
+                "postalCode", String.valueOf(customerDto.getPostalCode())
+        );
     }
 
     private static Map<String, Object> paymentMethodAsMap(PaymentMethodDto pm) {
@@ -87,5 +81,19 @@ public class NotificationService {
                 "type", PaymentMethodType.UNKNOWN.name(),
                 "number", Constants.UNKNOWN_ATTRIBUTE_VALUE
         );
+    }
+
+    private static Map<String, Object> orderItemAsMap(OrderItemDto orderItemDto) {
+        return Map.of(
+                "productName", orderItemDto.getProduct().getName(),
+                "quantity", orderItemDto.getQuantity(),
+                "price", orderItemDto.getTotalPrice()
+        );
+    }
+
+    private static String date2str(LocalDateTime dateTime) {
+        return dateTime != null
+                ? dateTime.format(DateTimeFormatter.ofPattern("MMM d, yyyy 'at' HH:mm").localizedBy(Locale.ENGLISH))
+                : "";
     }
 }

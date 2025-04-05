@@ -22,6 +22,7 @@ import java.util.UUID;
 public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderMapper orderMapper;
+    private final NotificationService notificationService;
 
     public List<OrderDto> findAll() {
         return orderRepository.findAll().stream().map(orderMapper::map).toList();
@@ -37,27 +38,34 @@ public class OrderService {
 
     public OrderDto persist(OrderDto orderDto) {
         Order order = orderMapper.map(orderDto);
-        order = orderRepository.saveAndFlush(order);
+        OrderDto saved = orderMapper.map(orderRepository.saveAndFlush(order));
+        notificationService.orderReceived(saved);
 
-        return orderMapper.map(order);
+        return saved;
     }
 
-    public OrderDto update(UUID id, OrderDto orderDto) {
-        return orderRepository.findById(id)
-                .map(order -> {
+    public void update(UUID id, OrderDto orderDto) {
+        orderRepository.findById(id).ifPresentOrElse(
+                order -> {
                     orderMapper.map(orderDto, order);
-                    return orderMapper.map(orderRepository.saveAndFlush(order));
-                })
-                .orElseThrow(() -> new NoSuchElementException("Order with id '" + id + "' not found"));
+                    OrderDto saved = orderMapper.map(orderRepository.saveAndFlush(order));
+                    notificationService.orderUpdated(saved);
+                },
+                () -> {
+                    throw new NoSuchElementException("Order with id '" + id + "' not found");
+                });
     }
 
-    public OrderDto patch(UUID id, OrderPatch orderPatch) {
-        return orderRepository.findById(id)
-                .map(order -> {
+    public void patch(UUID id, OrderPatch orderPatch) {
+        orderRepository.findById(id).ifPresentOrElse(
+                order -> {
                     orderPatch.applyTo(order);
-                    return orderMapper.map(orderRepository.saveAndFlush(order));
-                })
-                .orElseThrow(() -> new NoSuchElementException("Order with id '" + id + "' not found"));
+                    OrderDto saved = orderMapper.map(orderRepository.saveAndFlush(order));
+                    notificationService.orderUpdated(saved);
+                },
+                () -> {
+                    throw new NoSuchElementException("Order with id '" + id + "' not found");
+                });
     }
 
     public void delete(UUID id) {

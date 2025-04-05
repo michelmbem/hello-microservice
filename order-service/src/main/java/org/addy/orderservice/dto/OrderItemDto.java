@@ -2,9 +2,7 @@ package org.addy.orderservice.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.*;
 import lombok.*;
 import org.addy.orderservice.dto.deserializer.ProductDtoDeserializer;
 
@@ -32,7 +30,8 @@ public class OrderItemDto {
     @Positive
     private short quantity;
 
-    @PositiveOrZero
+    @DecimalMin("0.0")
+    @DecimalMax("1.0")
     private float discount;
 
     @JsonProperty("total_price")

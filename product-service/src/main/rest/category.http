@@ -1,51 +1,51 @@
 ### Create a new category
-POST http://localhost:8084/categories
+POST {{api.host}}/categories
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}
 
 {
-  "name": "Asian Dishes",
-  "description": "Asian cuisine delicacies"
+  "name": "Category name",
+  "description": "Detailed category description"
 }
 
 ### Get a list of all categories
-GET http://localhost:8084/categories
+GET {{api.host}}/categories
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}
 
 ### Get a category by id
-GET http://localhost:8084/categories/108de03b-f129-445d-8964-3cf2b76de125
+GET {{api.host}}/categories/{{api.category_id}}
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}
 
 ### Get a category by name
-GET http://localhost:8084/categories/by-name/Fruits
+GET {{api.host}}/categories/by-name/{{api.category_name}}
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}
 
 ### Get all products of a category
-GET http://localhost:8084/categories/35b33fef-4597-4a8a-b42e-ee92de88cbe7/products
+GET {{api.host}}/categories/{{api.category_id}}/products
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}
 
 ### Update a category
-PUT http://localhost:8084/categories/108de03b-f129-445d-8964-3cf2b76de125
+PUT {{api.host}}/categories/{{api.category_id}}
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}
 
 {
-  "name": "Fruits",
-  "description": "Delicious fruits kepts fresh and served as desserts"
+  "name": "Updated category name",
+  "description": "Updated detailed category description"
 }
 
 ### Delete a category
-DELETE http://localhost:8084/categories/ed63d542-452d-4f39-9a18-be1336412927
+DELETE {{api.host}}/categories/{{api.category_id}}
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}

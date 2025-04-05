@@ -1,4 +1,4 @@
-package org.addy.customerservice.model;
+package org.addy.customerservice.enumeration;
 
 public enum PaymentMethodType {
     CREDIT_CARD,

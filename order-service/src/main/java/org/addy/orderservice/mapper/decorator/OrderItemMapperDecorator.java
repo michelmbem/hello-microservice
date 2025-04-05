@@ -37,7 +37,7 @@ public abstract class OrderItemMapperDecorator implements OrderItemMapper {
                 .id(orderItem.getProductId())
                 .name(UNKNOWN_ATTRIBUTE_VALUE)
                 .unitPrice(orderItem.getUnitPrice())
-                .discountedPrice(orderItem.getUnitPrice().multiply(BigDecimal.valueOf(orderItem.getDiscount())))
+                .discountedPrice(orderItem.getUnitPrice().multiply(BigDecimal.valueOf(1f - orderItem.getDiscount())))
                 .build();
     }
 }

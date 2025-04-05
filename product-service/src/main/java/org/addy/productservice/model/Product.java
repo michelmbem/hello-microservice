@@ -2,7 +2,7 @@ package org.addy.productservice.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -23,9 +23,11 @@ public class Product {
     @NotEmpty
     private String name;
 
+    @PositiveOrZero
     @Column(name = "unit_price", nullable = false)
     private BigDecimal unitPrice;
 
+    @PositiveOrZero
     @Column(name = "discounted_price")
     private BigDecimal discountedPrice;
 

@@ -1,8 +1,7 @@
-### Authenticate with username and password
-POST http://localhost:8181/realms/hello-microservice/protocol/openid-connect/token
+POST {{auth.host}}/{{auth.realm_path}}/{{auth.token_path}}
 Content-Type: application/x-www-form-urlencoded
 
-grant_type=password&client_id=order-service&username=maeva.hiol@addy.org&password=a1m3h1&scope=profile%20phone%20address
+client_id=order-service&grant_type={{auth.grant_type}}&username={{auth.username}}&password={{auth.password}}&scope={{auth.scopes}}
 
 > {%
     client.test("Access token obtained from authorization server", () => {
@@ -14,7 +13,7 @@ grant_type=password&client_id=order-service&username=maeva.hiol@addy.org&passwor
 %}
 
 ### Get current user details
-GET http://localhost:8083/users/current
+GET {{api.host}}/users/current
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}

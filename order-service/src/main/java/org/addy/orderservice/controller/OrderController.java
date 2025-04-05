@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.addy.orderservice.dto.OrderDto;
 import org.addy.orderservice.dto.patch.OrderPatch;
-import org.addy.orderservice.service.NotificationService;
 import org.addy.orderservice.service.OrderService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,7 +21,6 @@ import java.util.UUID;
 @RequestMapping("/orders")
 public class OrderController {
     private final OrderService orderService;
-    private final NotificationService notificationService;
 
     @GetMapping
     public List<OrderDto> findAll() {
@@ -43,7 +41,6 @@ public class OrderController {
     @PreAuthorize("hasRole('customer')")
     public ResponseEntity<OrderDto> persist(@Valid @RequestBody OrderDto orderDto) {
         orderDto = orderService.persist(orderDto);
-        notificationService.orderReceived(orderDto);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -56,8 +53,7 @@ public class OrderController {
     @PutMapping("{id}")
     @PreAuthorize("hasRole('order-manager')")
     public ResponseEntity<Void> update(@PathVariable UUID id, @Valid @RequestBody OrderDto orderDto) {
-        orderDto = orderService.update(id, orderDto);
-        notificationService.orderUpdated(orderDto);
+        orderService.update(id, orderDto);
 
         return ResponseEntity.noContent().build();
     }
@@ -65,8 +61,7 @@ public class OrderController {
     @PatchMapping("{id}")
     @PreAuthorize("hasRole('order-manager')")
     public ResponseEntity<Void> patch(@PathVariable UUID id, @Valid @RequestBody OrderPatch orderPatch) {
-        OrderDto orderDto = orderService.patch(id, orderPatch);
-        notificationService.orderUpdated(orderDto);
+        orderService.patch(id, orderPatch);
 
         return ResponseEntity.noContent().build();
     }

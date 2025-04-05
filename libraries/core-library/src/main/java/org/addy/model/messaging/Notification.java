@@ -1,4 +1,4 @@
-package org.addy.messaging;
+package org.addy.model.messaging;
 
 import java.util.Map;
 
