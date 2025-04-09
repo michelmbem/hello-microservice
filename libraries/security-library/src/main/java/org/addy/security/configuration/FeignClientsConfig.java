@@ -14,8 +14,8 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 @Configuration
 @ConditionalOnBean(OAuth2AuthorizedClientService.class)
 public class FeignClientsConfig {
-    private final OAuth2AuthorizedClientService authorizedClientService;
     private final ClientRegistrationRepository clientRegistrationRepository;
+    private final OAuth2AuthorizedClientService authorizedClientService;
 
     @Bean
     public OAuth2AuthorizedClientManager oAuth2AuthorizedClientManager() {

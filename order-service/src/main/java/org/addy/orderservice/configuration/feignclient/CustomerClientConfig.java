@@ -19,8 +19,8 @@ public class CustomerClientConfig {
     @Bean
     public RequestInterceptor customerRequestInterceptor() {
         var credentialsManager = new OAuthClientCredentialsFeignManager(
-                authorizedClientManager,
-                registrationRepository.findByRegistrationId(CLIENT_REGISTRATION_ID)
+                registrationRepository.findByRegistrationId(CLIENT_REGISTRATION_ID),
+                authorizedClientManager
         );
 
         return requestTemplate -> requestTemplate
