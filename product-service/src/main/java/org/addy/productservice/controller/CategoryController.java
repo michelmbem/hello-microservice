@@ -7,9 +7,9 @@ import org.addy.productservice.dto.CategoryDto;
 import org.addy.productservice.dto.ProductDto;
 import org.addy.productservice.service.CategoryService;
 import org.addy.productservice.service.ProductService;
+import org.addy.web.UriHelper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
@@ -24,39 +24,35 @@ public class CategoryController {
     private final ProductService productService;
     
     @GetMapping
-    public List<CategoryDto> findAll() {
+    public List<CategoryDto> getAll() {
         return categoryService.findAll();
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<CategoryDto> findById(@PathVariable UUID id) {
+    public ResponseEntity<CategoryDto> getById(@PathVariable UUID id) {
         return categoryService.findById(id).map(ResponseEntity::ok).orElseThrow();
     }
 
     @GetMapping("by-name/{name}")
-    public ResponseEntity<CategoryDto> findByName(@PathVariable String name) {
+    public ResponseEntity<CategoryDto> getByName(@PathVariable String name) {
         return categoryService.findByName(name).map(ResponseEntity::ok).orElseThrow();
     }
 
     @GetMapping("{categoryId}/products")
-    public List<ProductDto> findProducts(@PathVariable UUID categoryId) {
+    public List<ProductDto> getProducts(@PathVariable UUID categoryId) {
         return productService.findByCategoriesId(categoryId);
     }
 
     @PostMapping
-    public ResponseEntity<CategoryDto> persist(@Valid @RequestBody CategoryDto categoryDto) {
+    public ResponseEntity<CategoryDto> post(@Valid @RequestBody CategoryDto categoryDto) {
         categoryDto = categoryService.persist(categoryDto);
-
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(categoryDto.getId())
-                .toUri();
+        URI location = UriHelper.relativeLocation("/{id}", categoryDto.getId());
 
         return ResponseEntity.created(location).body(categoryDto);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Void> update(@PathVariable UUID id, @Valid @RequestBody CategoryDto categoryDto) {
+    public ResponseEntity<Void> put(@PathVariable UUID id, @Valid @RequestBody CategoryDto categoryDto) {
         categoryService.update(id, categoryDto);
 
         return ResponseEntity.noContent().build();

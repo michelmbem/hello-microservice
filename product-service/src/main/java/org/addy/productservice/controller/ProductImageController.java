@@ -5,9 +5,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.addy.productservice.dto.ProductImageDto;
 import org.addy.productservice.service.ProductImageService;
+import org.addy.web.UriHelper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
@@ -21,29 +21,25 @@ public class ProductImageController {
     private final ProductImageService productImageService;
     
     @GetMapping
-    public List<ProductImageDto> findAll() {
+    public List<ProductImageDto> getAll() {
         return productImageService.findAll();
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<ProductImageDto> findById(@PathVariable UUID id) {
+    public ResponseEntity<ProductImageDto> getById(@PathVariable UUID id) {
         return productImageService.findById(id).map(ResponseEntity::ok).orElseThrow();
     }
 
     @PostMapping
-    public ResponseEntity<ProductImageDto> persist(@Valid @RequestBody ProductImageDto imageDto) {
+    public ResponseEntity<ProductImageDto> post(@Valid @RequestBody ProductImageDto imageDto) {
         imageDto = productImageService.persist(imageDto);
-
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(imageDto.getId())
-                .toUri();
+        URI location = UriHelper.relativeLocation("/{id}", imageDto.getId());
 
         return ResponseEntity.created(location).body(imageDto);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Void> update(@PathVariable UUID id, @Valid @RequestBody ProductImageDto imageDto) {
+    public ResponseEntity<Void> put(@PathVariable UUID id, @Valid @RequestBody ProductImageDto imageDto) {
         productImageService.update(id, imageDto);
 
         return ResponseEntity.noContent().build();

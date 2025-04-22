@@ -6,10 +6,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.addy.orderservice.dto.OrderDto;
 import org.addy.orderservice.dto.patch.OrderPatch;
 import org.addy.orderservice.service.OrderService;
+import org.addy.web.UriHelper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
@@ -23,36 +23,32 @@ public class OrderController {
     private final OrderService orderService;
 
     @GetMapping
-    public List<OrderDto> findAll() {
+    public List<OrderDto> getAll() {
         return orderService.findAll();
     }
 
     @GetMapping("by-customer/{customerId}")
-    public List<OrderDto> findByCustomerId(@PathVariable String customerId) {
+    public List<OrderDto> getByCustomer(@PathVariable String customerId) {
         return orderService.findByCustomerId(customerId);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<OrderDto> findById(@PathVariable UUID id) {
+    public ResponseEntity<OrderDto> getById(@PathVariable UUID id) {
         return orderService.findById(id).map(ResponseEntity::ok).orElseThrow();
     }
 
     @PostMapping
     @PreAuthorize("hasRole('customer')")
-    public ResponseEntity<OrderDto> persist(@Valid @RequestBody OrderDto orderDto) {
+    public ResponseEntity<OrderDto> post(@Valid @RequestBody OrderDto orderDto) {
         orderDto = orderService.persist(orderDto);
-
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(orderDto.getId())
-                .toUri();
+        URI location = UriHelper.relativeLocation("/{id}", orderDto.getId());
 
         return ResponseEntity.created(location).body(orderDto);
     }
 
     @PutMapping("{id}")
     @PreAuthorize("hasRole('order-manager')")
-    public ResponseEntity<Void> update(@PathVariable UUID id, @Valid @RequestBody OrderDto orderDto) {
+    public ResponseEntity<Void> put(@PathVariable UUID id, @Valid @RequestBody OrderDto orderDto) {
         orderService.update(id, orderDto);
 
         return ResponseEntity.noContent().build();

@@ -36,6 +36,7 @@ springBoot {
 
 dependencies {
     implementation project(':libraries:core-library')
+    implementation project(':libraries:web-library')
     implementation project(':libraries:security-library')
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'

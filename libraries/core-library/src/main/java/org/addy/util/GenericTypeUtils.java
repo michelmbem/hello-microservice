@@ -7,6 +7,7 @@ import java.lang.reflect.ParameterizedType;
 
 @UtilityClass
 public class GenericTypeUtils {
+
     public ParameterizedType findParameterizedType(@NonNull Class<?> clazz) {
         do {
             if (clazz.getGenericSuperclass() instanceof ParameterizedType parameterizedType) {
